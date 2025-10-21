@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Request as AttendanceRequest;
 
 class RequestController extends Controller
 {
@@ -11,8 +12,9 @@ class RequestController extends Controller
      */
     public function index()
     {
-        // 仮データを定義（DB未接続でもエラーを防ぐため）
-        $requests = [];
+        $requests = AttendanceRequest::where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('request.index', compact('requests'));
     }
@@ -22,11 +24,33 @@ class RequestController extends Controller
      */
     public function store(Request $request)
     {
-        // ここでフォームから送られた内容を受け取る
-        // まだDBがないので、ひとまず確認用にdd()で出す
-        // 例: dd($request->all());
+        $attendanceId = $request->attendance_id;
+        $start = $request->start_time;
+        $end   = $request->end_time;
+        $notes = $request->note;
 
-        // 実装後は保存処理 → リダイレクト予定
-        return redirect()->route('request.index')->with('message', '申請を送信しました');
+        $rests = [];
+        if ($request->has('rest_start')) {
+            foreach ($request->rest_start as $i => $rs) {
+                $re = $request->rest_end[$i] ?? null;
+                if ($rs || $re) {
+                    $rests[] = ['start' => $rs, 'end' => $re];
+                }
+            }
+        }
+
+        AttendanceRequest::create([
+            'user_id'       => auth()->id(),
+            'attendance_id' => $attendanceId,
+            'start_time'    => $start,
+            'end_time'      => $end,
+            'rests'         => $rests,
+            'note'          => $notes,
+            'status'        => 'pending',
+        ]);
+
+        return redirect()
+            ->route('request.index')
+            ->with('message', '申請を送信しました');
     }
 }
