@@ -1,49 +1,89 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Auth\Events\Registered;
+use App\Models\User;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\RequestController;
+use App\Http\Controllers\RegisteredUserController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| ここでは Fortify がログイン / 登録 / ログアウトなどを管理します。
-| スタッフ用の勤怠機能はログイン後にアクセスできるようにしています。
-|
-*/
+// =====================
+// Fortify register 上書き
+// =====================
+Route::post('/register', [RegisteredUserController::class, 'store'])
+    ->name('register');
 
-// ホーム（初期アクセス時のリダイレクト処理）
-Route::get('/', function () {
-    // もしログイン済みなら打刻画面へ
-    if (auth()->check()) {
-        return redirect('/attendance/record');
+// =====================
+// 未ログインでも verify 誘導画面を表示させる
+// =====================
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->name('verification.notice')->middleware('guest');
+
+// =====================
+// 未ログインでも認証メールを再送できる
+// =====================
+Route::post('/email/verify/resend-guest', function () {
+    // 登録時に保存した未認証ユーザーIDを取り出す
+    $userId = session('unauth_user_id');
+
+    if (!$userId) {
+        // 旧構成との互換（丸ごと格納されてたケース対応）
+        $user = session('unauthenticated_user');
+        if ($user && method_exists($user, 'getKey')) {
+            $userId = $user->getKey();
+        }
     }
-    // 未ログインなら Fortify のログイン画面へ
-    return redirect('/login');
+
+    if (!$userId) {
+        return back()->withErrors(['resend' => '再送できません。はじめから登録し直してください。']);
+    }
+
+    $user = User::find($userId);
+    if (!$user) {
+        return back()->withErrors(['resend' => 'ユーザーが見つかりません。再登録してください。']);
+    }
+
+    // すでに認証済みならログインへ誘導
+    if ($user->hasVerifiedEmail()) {
+        return redirect('/login')->with('status', 'すでに認証済みです。ログインしてください。');
+    }
+
+    // 認証メールを再送
+    $user->sendEmailVerificationNotification();
+
+    return back()->with('status', 'verification-link-sent');
+})->name('verification.resend.guest')->middleware(['guest', 'throttle:6,1']);
+
+// =====================
+// 初期アクセス振り分け
+// =====================
+Route::get('/', function () {
+    return auth()->check()
+        ? redirect('/attendance/record')
+        : redirect('/login');
 });
 
-// スタッフ認証後のみアクセスできるルート
-Route::middleware(['auth'])->group(function () {
+// =====================
+// ログイン & メール認証済のみ
+// =====================
+Route::middleware(['auth', 'verified'])->group(function () {
 
-    // 打刻ページ（出勤・休憩・退勤）
-    Route::get('/attendance/record', [AttendanceController::class, 'record'])->name('attendance.record');
+    Route::get('/attendance/record', [AttendanceController::class, 'record'])
+        ->name('attendance.record');
 
-    // 勤怠一覧
-    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+    Route::post('/attendance/store', [AttendanceController::class, 'store'])
+        ->name('attendance.store');
 
-    // 勤怠詳細（申請もここから）
-    Route::get('/attendance/{id}', [AttendanceController::class, 'show'])->name('attendance.show');
+    Route::get('/attendance', [AttendanceController::class, 'index'])
+        ->name('attendance.index');
 
-    // 申請一覧
-    Route::get('/request', [RequestController::class, 'index'])->name('request.index');
+    Route::get('/attendance/{id}', [AttendanceController::class, 'show'])
+        ->name('attendance.show');
 
-    // 勤怠修正申請送信
-    Route::post('/request', [RequestController::class, 'store'])->name('request.store');
+    Route::get('/request', [RequestController::class, 'index'])
+        ->name('request.index');
+
+    Route::post('/request/store', [RequestController::class, 'store'])
+        ->name('request.store');
 });
-
-// 打刻データ送信（仮）
-Route::post('/attendance', function () {
-    return back()->with('message', '打刻データを受け取りました（仮）');
-})->name('attendance.store');

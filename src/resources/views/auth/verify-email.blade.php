@@ -2,29 +2,29 @@
 
 @section('title', 'メール認証')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+@endsection
+
 @section('content')
-<div class="verify-container">
-    <h1 class="verify-title">メール認証はお済みですか？</h1>
-
-    {{-- 再送信メッセージ --}}
-    @if (session('status') == 'verification-link-sent')
-    <p class="verify-success">新しい認証メールを送信しました！</p>
-    @endif
-
-    <p class="verify-text">
-        登録されたメールアドレスに認証用リンクを送信しました。<br>
-        メール内のリンクをクリックして認証を完了してください。<br>
-        もしメールを受け取っていない場合は、以下から再送できます。
+<div class="verify-container text-center">
+    <p>
+        ご登録いただいたメールアドレスに認証メールを送信しました。<br>
+        メールを確認し、認証を完了してください。
     </p>
 
-    <form method="POST" action="{{ route('verification.send') }}" class="verify-form">
-        @csrf
-        <button type="submit" class="verify-btn">認証メールを再送信</button>
-    </form>
+    {{-- 認証画面へ進むボタン（グレー） --}}
+    <a href="{{ route('attendance.record') }}"
+        class="btn btn--secondary btn--full"
+        style="margin:20px 0;">
+        認証はこちらから
+    </a>
 
-    <form method="POST" action="{{ route('logout') }}" class="logout-form">
+    <form method="POST" action="{{ route('verification.resend.guest') }}">
         @csrf
-        <button type="submit" class="logout-btn">ログアウト</button>
+        <button type="submit" class="link-btn">
+            認証メールを再送する
+        </button>
     </form>
 </div>
 @endsection

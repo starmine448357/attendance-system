@@ -1,5 +1,3 @@
-<div class="logo">
-    <a href="{{ url('/') }}">
-        <img src="{{ asset('images/logo.svg') }}" alt="COACHTECHロゴ" class="logo__img">
-    </a>
-</div>
+<a href="/" class="header__logo">
+    <img src="{{ asset('images/logo.svg') }}" alt="COACHTECHロゴ">
+</a>

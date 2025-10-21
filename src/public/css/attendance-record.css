@@ -1,0 +1,142 @@
+/* ===============================
+   勤怠打刻ページ
+================================ */
+body {
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    background-color: #F0EFF2;
+    margin: 0;
+}
+
+/* 全体配置（上寄せ） */
+.record-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: calc(100vh - 80px);
+    text-align: center;
+    padding-top: 100px;
+}
+
+/* ===============================
+   ステータス（勤務外・出勤中・休憩中）
+================================ */
+.record-status {
+    margin-bottom: 30px;
+}
+
+.status {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 20px;
+    padding: 8px 20px;
+    letter-spacing: 0.5px;
+}
+
+/* 勤務外 */
+.status.gray {
+    background-color: #E0E0E0;
+    color: #696969;
+}
+
+/* 出勤中 */
+.status.black {
+    background-color: #E0E0E0;
+        color: #696969;}
+
+/* 休憩中 */
+.status.lightgray {
+    background-color: #E0E0E0;
+        color: #696969;}
+
+/* ===============================
+   日付と時刻
+================================ */
+.record-date-time {
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.date {
+    font-size: 32px;
+    font-weight: 400;
+    color: #000;
+    letter-spacing: 0.5px;
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+
+    /* ✅ 少し右にずらす */
+    position: relative;
+    left: 8px;
+    /* ← 右へ8px移動（自然な範囲） */
+}
+
+.time {
+    font-size: 80px;
+    font-weight: 700;
+    color: #000;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+/* ===============================
+   ボタンエリア
+================================ */
+/* ボタン行：間隔をしっかり空ける */
+/* ===============================
+   ボタンエリア（右に寄せる）
+================================ */
+.record-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 45px;
+    gap: 60px;
+    position: relative;
+    left: 10px;
+    /* ← 全体を右へ25px移動 */
+}
+
+/* ボタン共通 */
+.btn {
+    font-size: 20px;
+    font-weight: 700;
+    border: none;
+    border-radius: 14px;
+    padding: 16px 50px;
+    cursor: pointer;
+    transition: 0.3s;
+    line-height: 1;
+}/* 黒ボタン */
+.btn.black {
+    background-color: #000;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn.black:hover {
+    opacity: 0.85;
+}
+
+/* 白ボタン */
+.btn.white {
+    background-color: #fff;
+    color: #000;
+}
+
+.btn.white:hover {
+    background-color: #f3f3f3;
+}
+
+/* ===============================
+   お疲れ様メッセージ
+================================ */
+.finish-text {
+    font-weight: 600;
+    color: #333;
+    margin-top: 25px;
+    font-size: 18px;
+    letter-spacing: 0.3px;
+}

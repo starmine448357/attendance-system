@@ -2,30 +2,45 @@
 
 @section('title', '勤怠打刻')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/attendance-record.css') }}">
+@endsection
+
 @section('content')
 <div class="record-container">
-    {{-- 勤務状態 --}}
+
+    {{-- ===============================
+         ステータス表示
+    =============================== --}}
     <div class="record-status">
         @if (!$attendance)
         <span class="status gray">勤務外</span>
-        @elseif ($attendance && !$attendance->end_time)
-        @if (!$attendance->break_start)
+        @elseif ($attendance->status === '出勤中')
         <span class="status black">出勤中</span>
-        @elseif ($attendance->break_start && !$attendance->break_end)
-        <span class="status gray">休憩中</span>
-        @endif
-        @else
+        @elseif ($attendance->status === '休憩中')
+        <span class="status lightgray">休憩中</span>
+        @elseif ($attendance->status === '退勤済')
         <span class="status gray">退勤済</span>
+        @else
+        <span class="status gray">勤務外</span>
         @endif
     </div>
 
-    {{-- 日付と時刻 --}}
+    {{-- ===============================
+         日付と時刻
+    =============================== --}}
     <div class="record-date-time">
-        <p class="date">{{ now()->format('Y年n月j日(D)') }}</p>
+        @php
+        $weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+        $weekday = $weekdays[now()->dayOfWeek];
+        @endphp
+        <p class="date">{{ now()->format('Y年n月j日') }}（{{ $weekday }}）</p>
         <p class="time">{{ now()->format('H:i') }}</p>
     </div>
 
-    {{-- ボタン --}}
+    {{-- ===============================
+         打刻ボタン
+    =============================== --}}
     <div class="record-buttons">
         @if (!$attendance)
         {{-- 出勤前 --}}
@@ -34,8 +49,8 @@
             <input type="hidden" name="type" value="start">
             <button type="submit" class="btn black">出勤</button>
         </form>
-        @elseif ($attendance && !$attendance->end_time)
-        @if (!$attendance->break_start)
+
+        @elseif ($attendance->status === '出勤中')
         {{-- 出勤中 --}}
         <form method="POST" action="{{ route('attendance.store') }}">
             @csrf
@@ -48,15 +63,16 @@
             <input type="hidden" name="type" value="break_start">
             <button type="submit" class="btn white">休憩入</button>
         </form>
-        @elseif ($attendance->break_start && !$attendance->break_end)
+
+        @elseif ($attendance->status === '休憩中')
         {{-- 休憩中 --}}
         <form method="POST" action="{{ route('attendance.store') }}">
             @csrf
             <input type="hidden" name="type" value="break_end">
             <button type="submit" class="btn white">休憩戻</button>
         </form>
-        @endif
-        @else
+
+        @elseif ($attendance->status === '退勤済')
         {{-- 退勤済 --}}
         <p class="finish-text">お疲れ様でした。</p>
         @endif

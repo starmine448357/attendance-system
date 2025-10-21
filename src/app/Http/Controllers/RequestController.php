@@ -11,7 +11,10 @@ class RequestController extends Controller
      */
     public function index()
     {
-        return view('request.index');
+        // 仮データを定義（DB未接続でもエラーを防ぐため）
+        $requests = [];
+
+        return view('request.index', compact('requests'));
     }
 
     /**

@@ -5,7 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'スタッフ画面')</title>
+
+    {{-- 共通CSS --}}
     <link rel="stylesheet" href="{{ asset('css/user.css') }}">
+
+    {{-- ページごとの追加CSS --}}
+    @yield('css')
 </head>
 
 <body class="user-body">
@@ -17,9 +22,16 @@
             {{-- ナビゲーション --}}
             <nav class="user-header__nav">
                 <ul>
+                    {{-- ✅ 状態に応じて表示内容を切り替え --}}
+                    @if (isset($status) && $status === '退勤済')
+                    <li><a href="{{ route('attendance.index') }}">今月の出勤一覧</a></li>
+                    <li><a href="{{ route('request.index') }}">申請一覧</a></li>
+                    @else
+                    <li><a href="{{ route('attendance.record') }}">勤怠</a></li>
                     <li><a href="{{ route('attendance.index') }}">勤怠一覧</a></li>
                     <li><a href="{{ route('request.index') }}">申請</a></li>
-                    <li><a href="{{ route('attendance.record') }}">打刻</a></li>
+                    @endif
+
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

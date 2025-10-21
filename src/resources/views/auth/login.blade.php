@@ -1,25 +1,38 @@
-<!DOCTYPE html>
-<html lang="ja">
+@extends('layouts.user_guest')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ログイン</title>
-</head>
+@section('title', 'ログイン')
 
-<body>
-    <h1>ログイン画面</h1>
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-        <label for="email">メールアドレス</label><br>
-        <input id="email" type="email" name="email" required autofocus><br><br>
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+@endsection
 
-        <label for="password">パスワード</label><br>
-        <input id="password" type="password" name="password" required ><br><br>
+@section('content')
+<form action="{{ route('login') }}" method="POST" class="authenticate center">
+    @csrf
+    <h1 class="page__title">ログイン</h1>
 
-        <button type="submit">ログイン</button>
+    {{-- メールアドレス --}}
+    <label for="email" class="entry__name">メールアドレス</label>
+    <input id="email" type="email" name="email" class="input" value="{{ old('email') }}" required autofocus>
+    <div class="form__error">
+        @error('email')
+        {{ $message }}
+        @enderror
+    </div>
 
-    </form>
-</body>
+    {{-- パスワード --}}
+    <label for="password" class="entry__name">パスワード</label>
+    <input id="password" type="password" name="password" class="input" required>
+    <div class="form__error">
+        @error('password')
+        {{ $message }}
+        @enderror
+    </div>
 
-</html>
+    {{-- ボタン --}}
+    <button type="submit" class="btn btn--big">ログインする</button>
+
+    {{-- リンク --}}
+    <a href="{{ route('register') }}" class="link">会員登録はこちら</a>
+</form>
+@endsection

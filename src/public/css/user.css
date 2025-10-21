@@ -1,0 +1,44 @@
+/* ===============================
+   ヘッダー共通（黒背景・右ナビ）
+================================ */
+.user-header {
+    background-color: #000;
+    padding: 14px 32px;
+}
+
+.user-header__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-header__nav ul {
+    display: flex;
+    list-style: none;
+    gap: 32px;
+    margin: 0;
+    padding: 0;
+}
+
+.user-header__nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.logout-btn:hover,
+.user-header__nav a:hover {
+    opacity: 0.8;
+}
