@@ -16,12 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminSeeder::class,
             UserSeeder::class,
+            AttendanceSeeder::class,
         ]);
 
-        // ===== テスト用ユーザー（任意） =====
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
     }
 }

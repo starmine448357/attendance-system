@@ -8,6 +8,7 @@ use App\Models\Attendance;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Response;
+use App\Http\Requests\AdminUpdateAttendanceRequest;
 
 class AdminAttendanceController extends Controller
 {
@@ -58,15 +59,33 @@ public function show($value)
     /**
      * 勤怠更新（管理者による修正）
      */
-    public function update(Request $request, $id)
+
+    public function update(AdminUpdateAttendanceRequest $request, $id)
     {
         $attendance = Attendance::findOrFail($id);
 
+        $validated = $request->validated();
+
         $attendance->update([
-            'start_time' => $request->start_time ?: null,
-            'end_time'   => $request->end_time ?: null,
-            'note'       => $request->note ?: null,
+            'start_time' => $validated['start_time'] ?? null,
+            'end_time'   => $validated['end_time'] ?? null,
+            'note'       => $validated['note'] ?? null,
         ]);
+
+        // 休憩テーブル更新
+        $attendance->rests()->delete();
+
+        if (!empty($validated['rests'])) {
+            foreach ($validated['rests'] as $index => $restData) {
+                if (!empty($restData['break_start']) || !empty($restData['break_end'])) {
+                    $attendance->rests()->create([
+                        'order' => $index + 1,
+                        'break_start' => $restData['break_start'] ?? null,
+                        'break_end'   => $restData['break_end'] ?? null,
+                    ]);
+                }
+            }
+        }
 
         return redirect()
             ->route('admin.attendance.show', $attendance->id)

@@ -178,7 +178,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             ->name('request.show');
 
         // 修正申請承認
-        Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminRequestController::class, 'approve'])
+        Route::post('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminRequestController::class, 'approve'])
             ->name('request.approve');
     });
 });

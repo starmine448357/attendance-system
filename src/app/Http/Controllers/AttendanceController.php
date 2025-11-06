@@ -73,18 +73,14 @@ class AttendanceController extends Controller
 
         switch ($request->input('type')) {
 
-            /**
-             * 出勤
-             */
+            // 出勤
             case 'start':
                 $attendance->start_time = now('Asia/Tokyo');
                 $attendance->status = '出勤中';
                 $attendance->save();
                 break;
 
-            /**
-                 * 休憩開始（新しい休憩を自動で追加）
-                 */
+            // 休憩開始（新しい休憩を自動で追加）
             case 'break_start':
                 $attendance->status = '休憩中';
                 $attendance->save();
@@ -102,9 +98,7 @@ class AttendanceController extends Controller
                 }
                 break;
 
-            /**
-                 * 休憩終了（最後の未完了休憩を閉じる）
-                 */
+            // 休憩終了（最後の未完了休憩を閉じる）
             case 'break_end':
                 $lastRest = $attendance->rests()->latest()->first();
                 if ($lastRest && !$lastRest->break_end) {
@@ -126,9 +120,7 @@ class AttendanceController extends Controller
                 ]);
                 break;
 
-            /**
-                 * 退勤
-                 */
+            // 退勤
             case 'end':
                 $attendance->end_time = now('Asia/Tokyo');
 
@@ -149,31 +141,32 @@ class AttendanceController extends Controller
     }
 
     /**
-     * 勤怠詳細
+     * 勤怠詳細（休憩全件・申請状態含む）
      */
     public function show($value)
     {
+        // 数字ならID、文字列なら日付と判定
         if (ctype_digit($value)) {
-            $attendance = Attendance::with(['rests', 'user'])->find($value);
+            $attendance = Attendance::with(['rests', 'requests', 'user'])->find($value);
         } else {
             $attendance = Attendance::where('user_id', Auth::id())
-                ->whereDate('date', \Carbon\Carbon::parse($value))
-                ->with(['rests', 'user'])
+                ->whereDate('date', Carbon::parse($value))
+                ->with(['rests', 'requests', 'user'])
                 ->first();
         }
 
         $pendingRequest = null;
-        $approvedRequest = null; // ← これ追加！
+        $approvedRequest = null;
 
         if ($attendance) {
             // 承認待ち申請
-            $pendingRequest = \App\Models\AttendanceRequest::where('attendance_id', $attendance->id)
+            $pendingRequest = AttendanceRequest::where('attendance_id', $attendance->id)
                 ->where('status', 'pending')
                 ->latest()
                 ->first();
 
             // 承認済み申請
-            $approvedRequest = \App\Models\AttendanceRequest::where('attendance_id', $attendance->id)
+            $approvedRequest = AttendanceRequest::where('attendance_id', $attendance->id)
                 ->where('status', 'approved')
                 ->latest()
                 ->first();
@@ -182,7 +175,7 @@ class AttendanceController extends Controller
         return view('attendance.show', compact(
             'attendance',
             'pendingRequest',
-            'approvedRequest' // ← これをビューに渡す
+            'approvedRequest'
         ));
     }
 }

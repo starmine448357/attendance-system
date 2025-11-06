@@ -77,7 +77,7 @@ body {
 
 /* 備考欄 */
 textarea {
-    width: 100%;
+    width: 65%;
     min-height: 80px;
     font-size: 16px;
     border: 1px solid #D3D3D3;
@@ -85,8 +85,9 @@ textarea {
     padding: 10px;
     font-family: inherit;
     background: #fff;
+    resize: none;
+    /* ← 大きさ変更を禁止 */
 }
-
 /* 修正ボタン */
 .submit-btn {
     display: block;
@@ -125,11 +126,11 @@ textarea {
 .center-inputs {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 62px;
-    /* 日付に揃える */
+    gap: 34px;
+    position: relative;
+    /* ← これ大事（絶対配置の基準になる） */
+    width: 100%;
 }
-
 /* 入力欄＆表示欄の統一 */
 .center-inputs input[type="time"],
 .center-inputs .value-time {
@@ -155,14 +156,14 @@ textarea {
 .error-message {
     color: #ff4d4d;
     font-size: 13px;
-    margin-left: auto;
-    text-align: right;
-    white-space: normal;
-    width: 170px;
-
-
+    position: absolute;
+    right: 10px;
+    /* フォーム右端から10px */
+    top: 50%;
+    /* 高さ中央寄せ */
+    transform: translateY(-50%);
+    white-space: nowrap;
 }
-
 /* ===============================
    承認済みボタン（管理者と統一）
 ================================ */

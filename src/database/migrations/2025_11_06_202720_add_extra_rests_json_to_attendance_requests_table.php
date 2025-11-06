@@ -1,0 +1,23 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('attendance_requests', function (Blueprint $table) {
+            // ✅ 休憩3件目以降を格納するJSONカラムを追加
+            $table->json('extra_rests_json')->nullable()->after('break_end_2');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('attendance_requests', function (Blueprint $table) {
+            $table->dropColumn('extra_rests_json');
+        });
+    }
+};

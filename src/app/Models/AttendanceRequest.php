@@ -14,10 +14,13 @@ class AttendanceRequest extends Model
         'user_id',
         'start_time',
         'end_time',
-        'break_start',  // ← 追加
-        'break_end',    // ← 追加
+        'break_start',
+        'break_end',
+        'break_start_2',     // ← 追加
+        'break_end_2',       // ← 追加
         'note',
         'status',
+        'extra_rests_json',  // ← 追加
     ];
 
     public function attendance()

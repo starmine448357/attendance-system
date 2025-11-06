@@ -15,14 +15,14 @@ body {
     padding: 0 30px;
 }
 
-/* 見出し */
+/* 見出し（縦線付き） */
 .page-title {
     font-size: 28px;
     font-weight: 700;
     margin-bottom: 40px;
-    position: relative;
+    border-left: 8px solid #000;
+    padding-left: 16px;
 }
-
 
 /* テーブル全体 */
 .detail-table {
@@ -34,6 +34,8 @@ body {
 
 /* 各行 */
 .row {
+    position: relative;
+    /* ← エラーメッセージ位置の基準 */
     display: flex;
     align-items: center;
     padding: 30px 60px;
@@ -73,9 +75,41 @@ body {
     font-weight: 600;
 }
 
+/* 出勤・退勤・休憩欄 */
+.center-inputs {
+    display: flex;
+    align-items: center;
+    gap: 34px;
+    position: relative;
+    /* 絶対配置基準 */
+    width: 100%;
+}
+
+/* time入力＆値の共通化 */
+.center-inputs input[type="time"],
+.center-inputs .value-time {
+    width: 103px;
+    height: 32px;
+    border: 1px solid #E1E1E1;
+    border-radius: 4px;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    color: #000;
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    background: #fff;
+}
+
+/* 「〜」 */
+.center-inputs span {
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+}
+
 /* 備考欄 */
 textarea {
-    width: 100%;
+    width: 75%;
     min-height: 80px;
     font-size: 16px;
     border: 1px solid #D3D3D3;
@@ -84,6 +118,19 @@ textarea {
     font-family: inherit;
     background: #fff;
     resize: none;
+}
+
+/* エラーメッセージ（右寄せ・中央揃え） */
+.error-message {
+    color: #ff4d4d;
+    font-size: 13px;
+    position: absolute;
+    right: 10px;
+    /* フォーム右端から10px */
+    top: 50%;
+    /* 高さ中央寄せ */
+    transform: translateY(-50%);
+    white-space: nowrap;
 }
 
 /* 修正ボタン */
@@ -120,34 +167,27 @@ textarea {
     padding-right: 20px;
 }
 
-/* 出勤・退勤・休憩欄 */
-.center-inputs {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 35px;
+/* ボタンエリア */
+.button-area {
+    text-align: right;
+    margin-top: 40px;
 }
 
-/* time入力＆値の共通化 */
-.center-inputs input[type="time"],
-.center-inputs .value-time {
-    width: 103px;
-    height: 32px;
-    border: 1px solid #E1E1E1;
-    border-radius: 4px;
-    font-size: 20px;
+/* 承認済みボタン（修正ボタンと統一サイズ・形） */
+.approved-btn {
+    display: inline-block;
+    width: 130px;
+    height: 50px;
+    background: #5f5f5f;
+    color: #fff;
+    font-size: 17px;
     font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    color: #000;
-    font-family: "Inter", "Noto Sans JP", sans-serif;
-    background: #fff;
-}
-
-/* 「〜」 */
-.center-inputs span {
-    font-size: 20px;
-    font-weight: 600;
-    color: #000;
+    line-height: 50px;
+    cursor: default;
 }
 
 /* モバイル対応 */
