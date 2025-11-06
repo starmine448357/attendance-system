@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'スタッフ画面')</title>
 
+    {{-- ページ固有CSS（request.cssなど） --}}
+    @yield('css')
+
     {{-- 共通CSS --}}
     <link rel="stylesheet" href="{{ asset('css/user.css') }}">
-
-    {{-- ページごとの追加CSS --}}
-    @yield('css')
 </head>
 
 <body class="user-body">
@@ -46,6 +46,10 @@
     <main class="user-main">
         @yield('content')
     </main>
+
+    {{-- ✅ これを追加 --}}
+    @yield('js')
+
 </body>
 
 </html>

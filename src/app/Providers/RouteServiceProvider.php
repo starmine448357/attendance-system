@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Route;
 class RouteServiceProvider extends ServiceProvider
 {
     /**
+     * ユーザー認証後のリダイレクト先
+     */
+    public const HOME = '/attendance/record';
+
+    /**
      * Define your route model bindings, pattern filters, and other route configuration.
      */
     public function boot(): void

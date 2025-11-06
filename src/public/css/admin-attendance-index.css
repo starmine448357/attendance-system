@@ -1,0 +1,199 @@
+/* ===============================
+   管理者 勤怠一覧（日次） - ゆったり拡大版
+================================ */
+
+body {
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    background-color: #F0EFF2;
+    margin: 0;
+    color: #737373;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+/* ===============================
+   コンテナ全体
+================================ */
+.attendance-index {
+    width: 96%;
+    max-width: 1250px;
+    /* ✅ 横幅さらに広く */
+    margin: 100px auto 160px;
+}
+
+/* ===============================
+   タイトル（縦線付き）
+================================ */
+.page-title {
+    font-size: 30px;
+    /* ✅ 大きく・目立たせる */
+    font-weight: 700;
+    color: #000;
+    border-left: 8px solid #000;
+    padding-left: 16px;
+    margin-bottom: 60px;
+}
+
+/* ===============================
+   日付移動カード
+================================ */
+.day-card {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border-radius: 14px;
+    padding: 26px 50px;
+    /* ✅ 縦横ともにゆったり */
+    margin-bottom: 60px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ボタン（前日・翌日） */
+.day-card__btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    /* ✅ 文字も拡大 */
+    font-weight: 600;
+    color: #737373;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.day-card__btn:hover {
+    opacity: 0.7;
+}
+
+/* アイコン */
+.day-card__icon {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+}
+
+.arrow-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+.arrow-icon--right {
+    transform: scaleX(-1);
+}
+
+/* 中央部分 */
+.day-card__center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.day-card__text {
+    font-size: 22px;
+    /* ✅ カレンダー文字を大きく */
+    font-weight: 700;
+    color: #000;
+}
+
+/* ===============================
+   テーブル構造
+================================ */
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    table-layout: fixed;
+}
+
+/* 見出し行 */
+.attendance-table th {
+    background-color: #fff;
+    font-weight: 700;
+    color: #737373;
+    padding: 26px 34px;
+    /* ✅ 行間を大きく */
+    border-bottom: 1px solid #E5E5E5;
+    text-align: center;
+    font-size: 18px;
+}
+
+/* 通常のセル */
+.attendance-table td {
+    padding: 26px 34px;
+    text-align: center;
+    border-bottom: 1px solid #E5E5E5;
+    font-size: 18px;
+    color: #000;
+}
+
+/* 名前列は左寄せ */
+.attendance-table td:first-child,
+.attendance-table th:first-child {
+    text-align: left;
+    padding-left: 50px;
+}
+
+/* 背景は全て白で統一 */
+.attendance-table tbody tr {
+    background-color: #fff;
+}
+
+/* 最後の行はボーダーなし */
+.attendance-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* 詳細リンク */
+.detail-link {
+    text-decoration: none;
+    font-weight: 700;
+    color: #000;
+    font-size: 17px;
+    border-radius: 8px;
+    padding: 8px 14px;
+    transition: 0.2s;
+}
+
+.detail-link:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* ===============================
+   レスポンシブ対応
+================================ */
+@media (max-width: 768px) {
+    .attendance-index {
+        width: 95%;
+    }
+
+    .day-card {
+        flex-direction: column;
+        gap: 16px;
+        padding: 18px 24px;
+    }
+
+    .day-card__center {
+        position: static;
+        transform: none;
+    }
+
+    .attendance-table th,
+    .attendance-table td {
+        padding: 14px;
+        font-size: 14px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+}

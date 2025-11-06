@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title','管理者画面')</title>
-    <link rel="stylesheet" href="{{asset('css/admin.css')}}">
+    <title>@yield('title', '管理者画面')</title>
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    {{-- ✅ ここを追加 --}}
+    @yield('css')
 </head>
 
 <body>

@@ -1,0 +1,184 @@
+/* ===============================
+   管理者 申請一覧 - 完成版（ズレ修正）
+================================ */
+body {
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    background-color: #F0EFF2;
+    margin: 0;
+    color: #737373;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+/* ===============================
+   コンテナ全体
+================================ */
+.request-container {
+    width: 96%;
+    max-width: 1200px;
+    margin: 100px auto 160px;
+}
+
+/* ===============================
+   タイトル（縦線付き）
+================================ */
+.page-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #000;
+    border-left: 8px solid #000;
+    padding-left: 16px;
+    margin-bottom: 50px;
+}
+
+/* ===============================
+   タブメニュー
+================================ */
+.tab-menu {
+    display: flex;
+    gap: 40px;
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    padding-left: 6px;
+}
+
+.tab {
+    text-decoration: none;
+    color: #737373;
+    padding-bottom: 8px;
+    transition: 0.2s;
+}
+
+.tab.active {
+    color: #000;
+}
+
+/* 区切り線 */
+.divider {
+    border: none;
+    border-top: 1px solid #000;
+    margin-bottom: 40px;
+}
+
+/* ===============================
+   テーブル全体（カード風）
+================================ */
+.table-wrapper {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ===============================
+   テーブル構成
+================================ */
+.request-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 19px;
+    table-layout: fixed;
+    background: #fff;
+    border-spacing: 0;
+}
+
+/* 行共通 */
+.request-table th,
+.request-table td {
+    padding: 22px 34px;
+    /* ✅ 高さを揃えるために微調整 */
+    border-bottom: 1px solid #E5E5E5;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background: #fff;
+    color: #737373;
+    text-align: center;
+    /* ✅ 全体中央寄せに統一 */
+    vertical-align: middle;
+    /* ✅ 行内の高さを統一 */
+}
+
+/* ヘッダー（見出し） */
+.request-table th {
+    color: #737373;
+    background: #ffffff;
+    font-size: 18px;
+}
+
+/* 状態・詳細列は中央寄せ */
+.request-table th:nth-child(1),
+.request-table td:nth-child(1),
+.request-table th:last-child,
+.request-table td:last-child {
+    text-align: center;
+}
+
+/* 名前・理由は左寄せ */
+.request-table th:nth-child(2),
+.request-table td:nth-child(2),
+.request-table th:nth-child(4),
+.request-table td:nth-child(4) {
+    text-align: left;
+}
+
+/* 最後の行ボーダーなし */
+.request-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ===============================
+   詳細リンク
+================================ */
+.request-table a {
+    color: #000;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 17px;
+    border-radius: 8px;
+    padding: 6px 12px;
+    transition: 0.2s;
+    display: inline-block;
+    /* ✅ 行高さを安定させる */
+    vertical-align: middle;
+}
+
+.request-table a:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* ===============================
+   データなし
+================================ */
+.no-data {
+    text-align: center;
+    color: #737373;
+    font-size: 18px;
+    padding: 80px 0;
+}
+
+/* ===============================
+   レスポンシブ対応
+================================ */
+@media (max-width: 768px) {
+    .request-container {
+        width: 95%;
+    }
+
+    .tab-menu {
+        gap: 20px;
+        font-size: 15px;
+        padding-left: 0;
+    }
+
+    .request-table th,
+    .request-table td {
+        padding: 14px;
+        font-size: 14px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+}

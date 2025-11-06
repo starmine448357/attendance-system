@@ -1,5 +1,5 @@
 /* ===============================
-   勤怠打刻ページ
+   勤怠打刻ページ（上寄せ＋拡大版）
 ================================ */
 body {
     font-family: "Inter", "Noto Sans JP", sans-serif;
@@ -7,73 +7,59 @@ body {
     margin: 0;
 }
 
-/* 全体配置（上寄せ） */
+/* 全体配置（中央→やや上寄せ） */
 .record-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    /* ✅ 上寄せ */
     min-height: calc(100vh - 80px);
     text-align: center;
-    padding-top: 100px;
+    padding-top: 150px;
+    /* ✅ 上余白控えめ（前:20px→70px） */
 }
 
 /* ===============================
    ステータス（勤務外・出勤中・休憩中）
 ================================ */
 .record-status {
-    margin-bottom: 30px;
+    margin-bottom: 45px;
 }
 
 .status {
     display: inline-block;
-    font-size: 14px;
+    font-size: 22px;
+    /* ✅ 少し拡大（20px→22px） */
     font-weight: 600;
-    border-radius: 20px;
-    padding: 8px 20px;
-    letter-spacing: 0.5px;
+    border-radius: 30px;
+    padding: 10px 30px;
+    letter-spacing: 0.6px;
+    background-color: #C8C8C8;
+    /* ✅ 統一カラー */
+    color: #333;
 }
-
-/* 勤務外 */
-.status.gray {
-    background-color: #E0E0E0;
-    color: #696969;
-}
-
-/* 出勤中 */
-.status.black {
-    background-color: #E0E0E0;
-        color: #696969;}
-
-/* 休憩中 */
-.status.lightgray {
-    background-color: #E0E0E0;
-        color: #696969;}
 
 /* ===============================
    日付と時刻
 ================================ */
 .record-date-time {
-    margin-bottom: 40px;
-    position: relative;
+    margin-bottom: 60px;
 }
 
 .date {
-    font-size: 32px;
-    font-weight: 400;
+    font-size: 34px;
+    /* ✅ 拡大（28px→34px） */
+    font-weight: 500;
     color: #000;
-    letter-spacing: 0.5px;
-    margin: 0 0 16px 0;
-    line-height: 1.2;
-
-    /* ✅ 少し右にずらす */
-    position: relative;
-    left: 8px;
-    /* ← 右へ8px移動（自然な範囲） */
+    letter-spacing: 1px;
+    margin: 0 0 25px 0;
+    line-height: 1.3;
 }
 
 .time {
-    font-size: 80px;
+    font-size: 110px;
+    /* ✅ 大きめ（100px→110px） */
     font-weight: 700;
     color: #000;
     letter-spacing: 2px;
@@ -83,47 +69,44 @@ body {
 /* ===============================
    ボタンエリア
 ================================ */
-/* ボタン行：間隔をしっかり空ける */
-/* ===============================
-   ボタンエリア（右に寄せる）
-================================ */
 .record-buttons {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    margin-top: 45px;
-    gap: 60px;
-    position: relative;
-    left: 10px;
-    /* ← 全体を右へ25px移動 */
+    gap: 70px;
+    margin-top: 60px;
 }
 
-/* ボタン共通 */
+/* ボタン共通（変更なし） */
 .btn {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 700;
     border: none;
-    border-radius: 14px;
-    padding: 16px 50px;
+    border-radius: 12px;
+    padding: 20px 70px;
     cursor: pointer;
     transition: 0.3s;
     line-height: 1;
-}/* 黒ボタン */
+}
+
+/* 黒ボタン */
 .btn.black {
     background-color: #000;
     color: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.2);
 }
 
 .btn.black:hover {
     opacity: 0.85;
+    transform: translateY(-2px);
 }
 
 /* 白ボタン */
 .btn.white {
     background-color: #fff;
     color: #000;
+    border: 1px solid #D3D3D3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .btn.white:hover {
@@ -136,7 +119,8 @@ body {
 .finish-text {
     font-weight: 600;
     color: #333;
-    margin-top: 25px;
-    font-size: 18px;
-    letter-spacing: 0.3px;
+    margin-top: 40px;
+    font-size: 24px;
+    /* ✅ 拡大（22px→24px） */
+    letter-spacing: 0.4px;
 }

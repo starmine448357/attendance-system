@@ -14,22 +14,22 @@
 
     {{-- 名前 --}}
     <label for="name" class="entry__name">名前</label>
-    <input id="name" type="text" name="name" class="input" value="{{ old('name') }}" required autofocus>
+    <input id="name" type="text" name="name" class="input" value="{{ old('name') }}" autofocus>
     <div class="form__error">@error('name') {{ $message }} @enderror</div>
 
     {{-- メールアドレス --}}
     <label for="email" class="entry__name">メールアドレス</label>
-    <input id="email" type="email" name="email" class="input" value="{{ old('email') }}" required>
+    <input id="email" type="email" name="email" class="input" value="{{ old('email') }}">
     <div class="form__error">@error('email') {{ $message }} @enderror</div>
 
     {{-- パスワード --}}
     <label for="password" class="entry__name">パスワード</label>
-    <input id="password" type="password" name="password" class="input" required>
+    <input id="password" type="password" name="password" class="input">
     <div class="form__error">@error('password') {{ $message }} @enderror</div>
 
     {{-- パスワード確認 --}}
     <label for="password_confirmation" class="entry__name">パスワード確認</label>
-    <input id="password_confirmation" type="password" name="password_confirmation" class="input" required>
+    <input id="password_confirmation" type="password" name="password_confirmation" class="input">
     <div class="form__error">@error('password_confirmation') {{ $message }} @enderror</div>
 
     {{-- 登録ボタン --}}

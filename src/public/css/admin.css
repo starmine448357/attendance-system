@@ -1,0 +1,202 @@
+/* ===============================
+   管理者共通レイアウト
+================================ */
+
+/* ===== 全体リセット ===== */
+body {
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    background-color: #F0EFF2;
+    margin: 0;
+    color: #737373;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+/* ===============================
+   ヘッダー（黒背景・右ナビ）
+================================ */
+.admin-header {
+    background-color: #000;
+    padding: 14px 32px;
+}
+
+.admin-header__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-header__nav ul {
+    display: flex;
+    list-style: none;
+    gap: 32px;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-header__nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.logout-btn:hover,
+.admin-header__nav a:hover {
+    opacity: 0.8;
+}
+
+/* ===============================
+   ページタイトル共通
+================================ */
+.page-title {
+    font-size: 24px;
+    font-weight: 700;
+    border-left: 8px solid #000;
+    padding-left: 12px;
+    margin-bottom: 40px;
+    color: #000;
+}
+
+/* ===============================
+   勤怠一覧ページ（/admin/attendance/list）
+================================ */
+.admin-attendance-index {
+    width: 90%;
+    max-width: 1000px;
+    margin: 60px auto;
+}
+
+/* 月カード */
+.month-card {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F8F8F8;
+    border-radius: 10px;
+    padding: 14px 28px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.month-card__btn {
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #737373;
+}
+
+.month-card__center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.current-month {
+    color: #000;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: normal;
+}
+
+/* 勤怠テーブル */
+.admin-attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    table-layout: fixed;
+}
+
+.admin-attendance-table th,
+.admin-attendance-table td {
+    padding: 14px 10px;
+    text-align: center;
+    border-bottom: 1px solid #E0E0E0;
+    font-size: 14px;
+}
+
+.admin-attendance-table td:first-child,
+.admin-attendance-table th:first-child {
+    text-align: left;
+    padding-left: 40px;
+}
+
+.admin-attendance-table thead th {
+    background-color: #F8F8F8;
+    font-weight: 700;
+    color: #737373;
+}
+
+.admin-attendance-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-attendance-table tbody tr:nth-child(odd) {
+    background-color: #FAFAFA;
+}
+
+/* 詳細ボタン */
+.detail-link {
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-size: 13px;
+    color: #000;
+    transition: 0.2s;
+}
+
+.detail-link:hover {
+    background: #000;
+    color: #fff;
+}
+
+/* ===============================
+   スタッフ一覧ページ（/admin/staff/list）
+================================ */
+.admin-staff-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.admin-staff-table th,
+.admin-staff-table td {
+    padding: 14px 20px;
+    text-align: left;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.admin-staff-table th {
+    background-color: #F8F8F8;
+    color: #737373;
+}
+
+.admin-staff-table tbody tr:nth-child(odd) {
+    background-color: #FAFAFA;
+}
+

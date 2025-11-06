@@ -1,0 +1,105 @@
+/* ===============================
+   管理者 スタッフ一覧（セル背景白Ver）
+================================ */
+
+body {
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    background-color: #F0EFF2;
+    margin: 0;
+    color: #737373;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+/* ===============================
+   コンテナ全体
+================================ */
+.staff-index {
+    width: 90%;
+    max-width: 900px;
+    margin: 60px auto 120px;
+}
+
+/* ===============================
+   タイトル（縦線付き）
+================================ */
+.page-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #000;
+    border-left: 8px solid #000;
+    padding-left: 12px;
+    margin-bottom: 30px;
+}
+
+/* ===============================
+   スタッフ一覧テーブル
+================================ */
+.staff-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.staff-table th,
+.staff-table td {
+    padding: 14px 20px;
+    text-align: center;
+    border-bottom: 1px solid #E5E5E5;
+    font-size: 14px;
+    background-color: #fff;
+    /* ✅ 背景白に変更 */
+}
+
+/* ヘッダーだけ薄グレーでもOK */
+.staff-table th {
+    background-color: #F8F8F8;
+    font-weight: 700;
+    color: #737373;
+}
+
+/* 名前列だけ左寄せ */
+.staff-table th:first-child,
+.staff-table td:first-child {
+    text-align: left;
+    padding-left: 30px;
+}
+
+/* 行ホバー時 */
+.staff-table tbody tr:hover td {
+    background-color: #FAFAFA;
+}
+
+/* 詳細リンク */
+.detail-link {
+    text-decoration: none;
+    font-weight: 700;
+    color: #000;
+    font-size: 14px;
+    border-radius: 4px;
+    padding: 4px 8px;
+    transition: 0.2s;
+}
+
+.detail-link:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* ===============================
+   レスポンシブ対応
+================================ */
+@media (max-width: 768px) {
+    .staff-index {
+        width: 95%;
+    }
+
+    .staff-table th,
+    .staff-table td {
+        padding: 10px;
+        font-size: 13px;
+    }
+}

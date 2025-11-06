@@ -1,0 +1,211 @@
+/* ===============================
+   管理者 月次勤怠一覧 - スタッフ版統一デザイン
+================================ */
+body {
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    background-color: #F0EFF2;
+    margin: 0;
+    color: #737373;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+/* ===============================
+   コンテナ全体
+================================ */
+.attendance-index {
+    width: 96%;
+    max-width: 1200px;
+    margin: 100px auto 160px;
+}
+
+/* ===============================
+   タイトル（縦線付き）
+================================ */
+.page-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #000;
+    border-left: 8px solid #000;
+    padding-left: 16px;
+    margin-bottom: 60px;
+}
+
+/* ===============================
+   月移動カード
+================================ */
+.month-card {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border-radius: 14px;
+    padding: 26px 50px;
+    margin-bottom: 60px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.month-card__btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #737373;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.month-card__btn:hover {
+    opacity: 0.7;
+}
+
+.arrow-icon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+.arrow-icon--right {
+    transform: scaleX(-1);
+}
+
+/* 中央部分 */
+.month-card__center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.month-card__icon {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+}
+
+.month-card__text {
+    font-size: 22px;
+    font-weight: 700;
+    color: #000;
+}
+
+/* ===============================
+   勤怠テーブル
+================================ */
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    table-layout: fixed;
+}
+
+.attendance-table th {
+    background-color: #fff;
+    font-weight: 700;
+    color: #737373;
+    padding: 26px 34px;
+    border-bottom: 1px solid #E5E5E5;
+    text-align: center;
+    font-size: 18px;
+}
+
+.attendance-table td {
+    padding: 26px 34px;
+    text-align: center;
+    border-bottom: 1px solid #E5E5E5;
+    font-size: 18px;
+    color: #737373;
+}
+
+.attendance-table td:first-child,
+.attendance-table th:first-child {
+    text-align: left;
+    padding-left: 50px;
+}
+
+.attendance-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.no-data {
+    text-align: center;
+    color: #999;
+    padding: 40px 0;
+}
+
+/* 詳細リンク */
+.detail-link {
+    text-decoration: none;
+    font-weight: 700;
+    color: #000;
+    font-size: 17px;
+    border-radius: 8px;
+    padding: 8px 14px;
+    transition: 0.2s;
+}
+
+.detail-link:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* ===============================
+   CSV出力ボタン
+================================ */
+.csv-export {
+    text-align: right;
+    margin-top: 40px;
+}
+
+.csv-btn {
+    display: inline-block;
+    padding: 12px 26px;
+    background-color: #000;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.csv-btn:hover {
+    background-color: #333;
+}
+
+/* ===============================
+   レスポンシブ
+================================ */
+@media (max-width: 768px) {
+    .attendance-index {
+        width: 95%;
+    }
+
+    .month-card {
+        flex-direction: column;
+        gap: 16px;
+        padding: 18px 24px;
+    }
+
+    .month-card__center {
+        position: static;
+        transform: none;
+    }
+
+    .attendance-table th,
+    .attendance-table td {
+        padding: 14px;
+        font-size: 14px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+}

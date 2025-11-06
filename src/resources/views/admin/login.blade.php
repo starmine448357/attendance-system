@@ -1,40 +1,35 @@
-@extends('layouts.user_guest')
+@extends('layouts.admin_guest')
 
-@section('title', 'スタッフログイン')
+@section('title', '管理者ログイン')
+
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/admin-auth.css') }}">
+@endsection
 
 @section('content')
-<div class="login-container">
-    <h1 class="login-title">ログイン</h1>
+<form action="{{ route('admin.login.submit') }}" method="POST" class="authenticate center">
+    @csrf
+    <h1 class="page__title">管理者ログイン</h1>
 
-    {{-- エラーメッセージ --}}
-    @if ($errors->any())
-    <div class="error-message">
-        <ul>
-            @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+    {{-- メールアドレス --}}
+    <label for="email" class="entry__name">メールアドレス</label>
+    <input id="email" type="email" name="email" class="input" value="{{ old('email') }}" required autofocus>
+    <div class="form__error">
+        @error('email')
+        {{ $message }}
+        @enderror
     </div>
-    @endif
 
-    <form method="POST" action="{{ route('login') }}" class="login-form">
-        @csrf
-
-        <div class="form-group">
-            <label for="email">メールアドレス</label>
-            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
-        </div>
-
-        <div class="form-group">
-            <label for="password">パスワード</label>
-            <input id="password" type="password" name="password" required>
-        </div>
-
-        <button type="submit" class="login-btn">ログイン</button>
-    </form>
-
-    <div class="register-link">
-        <p>アカウントをお持ちでない方は <a href="{{ route('register') }}">こちら</a></p>
+    {{-- パスワード --}}
+    <label for="password" class="entry__name">パスワード</label>
+    <input id="password" type="password" name="password" class="input" required>
+    <div class="form__error">
+        @error('password')
+        {{ $message }}
+        @enderror
     </div>
-</div>
+
+    {{-- ボタン --}}
+    <button type="submit" class="btn btn--big">ログインする</button>
+</form>
 @endsection

@@ -1,0 +1,206 @@
+/* ===============================
+   勤怠詳細 共通デザイン
+=============================== */
+body {
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    background-color: #F0EFF2;
+    margin: 0;
+}
+
+/* コンテナ */
+.attendance-detail-container {
+    max-width: 900px;
+    margin: 80px auto 120px;
+    padding: 0 30px;
+}
+
+/* 見出し */
+/* 勤怠詳細タイトル（縦線付き） */
+.page-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    border-left: 8px solid #000;
+    /* ← これで縦線 */
+    padding-left: 16px;
+    /* 文字との間隔 */
+}
+
+/* テーブル全体 */
+.detail-table {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+/* 各行 */
+.row {
+    display: flex;
+    align-items: center;
+    padding: 30px 60px;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+/* ラベル */
+.label {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #737373;
+    letter-spacing: 0.15em;
+}
+
+/* 値 */
+.value {
+    flex: 1;
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-left: 80px;
+    line-height: 1.6;
+}
+
+/* 日付 */
+.date-year {
+    margin-right: 110px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* 備考欄 */
+textarea {
+    width: 100%;
+    min-height: 80px;
+    font-size: 16px;
+    border: 1px solid #D3D3D3;
+    border-radius: 6px;
+    padding: 10px;
+    font-family: inherit;
+    background: #fff;
+}
+
+/* 修正ボタン */
+.submit-btn {
+    display: block;
+    width: 130px;
+    height: 50px;
+    margin-left: auto;
+    margin-top: 40px;
+    background: #000;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s ease;
+}
+
+.submit-btn:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+}
+
+/* 承認待ちメッセージ */
+.pending-message {
+    text-align: right;
+    color: #E65C5C;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    padding-right: 20px;
+}
+
+/* 出勤・退勤・休憩欄統一 */
+.center-inputs {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 62px;
+    /* 日付に揃える */
+}
+
+/* 入力欄＆表示欄の統一 */
+.center-inputs input[type="time"],
+.center-inputs .value-time {
+    width: 103px;
+    height: 32px;
+    border: 1px solid #E1E1E1;
+    border-radius: 4px;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    color: #000;
+    font-family: "Inter", "Noto Sans JP", sans-serif;
+    background: #fff;
+}
+
+/* 「〜」 */
+.center-inputs span {
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+}
+
+.error-message {
+    color: #ff4d4d;
+    font-size: 13px;
+    margin-left: auto;
+    text-align: right;
+    white-space: normal;
+    width: 170px;
+
+
+}
+
+/* ===============================
+   承認済みボタン（管理者と統一）
+================================ */
+/* ===============================
+   承認済みボタン（修正ボタンと統一サイズ・形）
+================================ */
+.button-area {
+    text-align: right;
+    margin-top: 40px;
+}
+
+.approved-btn {
+    display: inline-block;
+    width: 130px;
+    height: 50px;
+    background: #5f5f5f;    /* グレー */
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    line-height: 50px;
+    /* 中央揃え */
+    cursor: default;
+    /* 押せない感 */
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+    .center-inputs {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .value {
+        padding-left: 0;
+    }
+}

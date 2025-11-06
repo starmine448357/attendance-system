@@ -101,75 +101,128 @@ body {
 ================================ */
 form.authenticate.register-form .entry__name {
     margin: 22px 0 8px 0;
-    /* 各フォーム間を詰める */
 }
 
 form.authenticate.register-form .input {
     height: 50px;
-    /* フォーム高さを少し低めに */
 }
 
 form.authenticate.register-form .btn--big {
     margin-top: 40px;
-    /* ボタン上の余白を詰める */
 }
 
 /* ===============================
-   メール認証ページ
-================================ */
-/* ===============================
-   メール認証ページの段落調整
+   メール認証ページ（最終安定版 / Fortify対応）
 ================================ */
 .verify-container {
-    max-width: 420px;
-    margin: 0 auto;
-    padding-top: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: calc(100vh - 70px);
+    padding-top: 15vh;
     text-align: center;
+    font-family: "Inter", "Noto Sans JP", sans-serif;
 }
 
+/* メッセージ部分 */
 .verify-container p {
-    font-size: 16px;
-    line-height: 1.8;
-    color: #333;
-    margin-bottom: 18px;
-    word-break: keep-all;
+    font-size: 22px;
+    color: #000;
+    line-height: 1.9;
+    margin-bottom: 60px;
     font-weight: 700;
-    /* 🔹文字を中太にする */
 }
 
-/* メインボタン（認証はこちらから） */
-.btn--secondary {
+/* 「認証はこちらから」ボタン */
+.verify-container .btn--secondary {
     display: inline-block;
-    min-width: 200px;
-    padding: 12px 0;
-    background: #E0E0E0;
+    font-size: 20px;
+    padding: 16px 50px;
+    background-color: #E0E0E0;
     color: #000;
     font-weight: bold;
     border: 1.5px solid #000;
-    /* 黒枠追加 */
-    border-radius: 4px;
-    text-decoration: none;
+    border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s;
+    text-decoration: none;
 }
 
-.btn--secondary:hover {
-    background-color: #D5D5D5;
+/* ホバー時（有効時のみ） */
+.verify-container .btn--secondary:hover {
+    background-color: #CFCFCF;
+    color: #000;
 }
 
-/* リンク（再送） */
-.link-btn {
+/* Fortifyの無効化状態（未認証時など） */
+.verify-container .btn--secondary[style*="pointer-events:none"] {
+    opacity: 1;
+    color: #000;
+    cursor: not-allowed;
+    background-color: #E0E0E0;
+    text-decoration: none;
+}
+
+/* 再送リンク（現状維持） */
+.verify-container .link-btn {
+    margin-top: 25px;
+    font-size: 16px;
+    color: #007BFF;
+    text-decoration: underline;
     background: none;
     border: none;
-    color: #007BFF;
-    text-decoration: none;
-    /* 下線削除 */
     cursor: pointer;
-    font-size: 14px;
-    margin-top: 10px;
-    font-weight: 400;
+    font-weight: 500;
 }
 
-.link-btn:hover {
-    color: #0056b3;
+.verify-container .link-btn:hover {
+    opacity: 0.8;
+}
+
+/* ===============================
+   バリデーションエラー表示
+================================ */
+.form__error {
+    color: #FF3B30;
+    /* 赤文字 */
+    font-size: 15px;
+    margin-top: 6px;
+    font-weight: 600;
+}
+/* ===============================
+   レスポンシブ対応
+================================ */
+@media (max-width: 768px) {
+    .authenticate {
+        padding: 40px 30px;
+    }
+
+    .page__title {
+        font-size: 24px;
+    }
+
+    .input {
+        height: 48px;
+        font-size: 15px;
+    }
+
+    .btn--big {
+        font-size: 16px;
+        height: 48px;
+    }
+
+    .verify-container {
+        padding-top: 12vh;
+    }
+
+    .verify-container p {
+        font-size: 18px;
+        margin-bottom: 40px;
+    }
+
+    .verify-container .btn--secondary {
+        font-size: 18px;
+        padding: 14px 40px;
+    }
 }

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'スタッフログイン')</title>
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+    @yield('css') {{-- ←これを追加 --}}
 </head>
 
 <body class="user-guest-body">
