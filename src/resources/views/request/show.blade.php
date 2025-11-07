@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.user')
 
 @section('title', '申請詳細')
 
@@ -11,12 +11,13 @@
     <h1 class="page-title">勤怠詳細</h1>
 
     <div class="detail-table">
+
         {{-- ===============================
              名前
         =============================== --}}
         <div class="row">
             <div class="label">名前</div>
-            <div class="value">{{ $request->attendance->user->name ?? '―' }}</div>
+            <div class="value">{{ Auth::user()->name }}</div>
         </div>
 
         {{-- ===============================
@@ -25,8 +26,8 @@
         <div class="row">
             <div class="label">日付</div>
             <div class="value">
-                <span class="date-year">{{ $request->attendance->date->format('Y年') }}</span>
-                <span class="date-day">{{ $request->attendance->date->format('n月 j日') }}</span>
+                <span class="date-year">{{ $requestData->attendance->date->format('Y年') }}</span>
+                <span class="date-day">{{ $requestData->attendance->date->format('n月 j日') }}</span>
             </div>
         </div>
 
@@ -36,9 +37,9 @@
         <div class="row">
             <div class="label">出勤・退勤</div>
             <div class="value center-inputs">
-                <span>{{ $request->start_time ? \Carbon\Carbon::parse($request->start_time)->format('H:i') : '―' }}</span>
+                <span>{{ $requestData->start_time ? \Carbon\Carbon::parse($requestData->start_time)->format('H:i') : '―' }}</span>
                 <span>〜</span>
-                <span>{{ $request->end_time ? \Carbon\Carbon::parse($request->end_time)->format('H:i') : '―' }}</span>
+                <span>{{ $requestData->end_time ? \Carbon\Carbon::parse($requestData->end_time)->format('H:i') : '―' }}</span>
             </div>
         </div>
 
@@ -47,12 +48,12 @@
         =============================== --}}
         @php
         $displayRests = collect([
-        ['break_start' => $request->break_start, 'break_end' => $request->break_end],
-        ['break_start' => $request->break_start_2, 'break_end' => $request->break_end_2],
+        ['break_start' => $requestData->break_start, 'break_end' => $requestData->break_end],
+        ['break_start' => $requestData->break_start_2, 'break_end' => $requestData->break_end_2],
         ]);
 
-        if (!empty($request->extra_rests_json)) {
-        $extraRests = json_decode($request->extra_rests_json, true);
+        if (!empty($requestData->extra_rests_json)) {
+        $extraRests = json_decode($requestData->extra_rests_json, true);
         foreach ($extraRests as $rest) {
         $displayRests->push([
         'break_start' => $rest['break_start'] ?? null,
@@ -74,28 +75,23 @@
         @endforeach
 
         {{-- ===============================
-             備考（表示専用）
+             備考
         =============================== --}}
         <div class="row">
             <div class="label">備考</div>
             <div class="value">
-                {{ $request->note ?? '―' }}
+                {{ $requestData->note ?? '―' }}
             </div>
         </div>
     </div>
 
     {{-- ===============================
-         承認ボタンエリア
+         承認ステータス表示
     =============================== --}}
-    <div class="button-area">
-        @if ($request->status === 'pending')
-        <form method="POST" action="{{ route('admin.request.approve', $request->id) }}">
-            @csrf
-            <button type="submit" class="approve-btn">承認</button>
-        </form>
-        @else
-        <span class="approved-btn">承認済み</span>
-        @endif
-    </div>
+    @if ($requestData->status === 'pending')
+    <p class="pending-message">※承認待ちのため修正はできません。</p>
+    @elseif ($requestData->status === 'approved')
+    <p class="approved-message">※承認済みの申請です。</p>
+    @endif
 </div>
 @endsection

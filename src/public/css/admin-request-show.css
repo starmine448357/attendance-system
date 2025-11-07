@@ -127,6 +127,25 @@ body {
     color: #000;
 }
 
+/* ===============================
+   ステータスメッセージ（閲覧専用画面）
+================================ */
+.pending-message {
+    text-align: right;
+    color: #E74C3C;
+    /* 赤 */
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.approved-message {
+    text-align: right;
+    color: #E74C3C;   
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+
 /* モバイル対応 */
 @media (max-width: 768px) {
     .center-inputs {

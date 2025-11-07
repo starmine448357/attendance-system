@@ -166,4 +166,126 @@ class AttendanceTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('勤怠詳細');
     }
+
+    /** @test */
+    public function 勤怠打刻画面で現在の日時が正しく表示される()
+    {
+        // 現在時刻を固定（テストの再現性を保証）
+        Carbon::setTestNow(Carbon::create(2025, 11, 7, 10, 30, 0));
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // 打刻画面にアクセス
+        $response = $this->get('/attendance/record');
+        $response->assertStatus(200);
+
+        $expectedDate = Carbon::now()->format('Y年 n月 j日（D）');
+        $expectedTime = Carbon::now()->format('H:i');
+
+        // 画面上に現在日時が含まれているか確認
+        $response->assertSee($expectedDate);
+        $response->assertSee($expectedTime);
+    }
+    /** @test */
+    public function 勤務外の場合_ステータスが勤務外と表示される()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $response = $this->get('/attendance/record');
+        $response->assertSee('勤務外');
+    }
+
+    /** @test */
+    public function 出勤中の場合_ステータスが出勤中と表示される()
+    {
+        $user = User::factory()->create();
+        Attendance::factory()->create([
+            'user_id' => $user->id,
+            'status' => '出勤中',
+        ]);
+        $this->actingAs($user);
+        $response = $this->get('/attendance/record');
+        $response->assertSee('出勤中');
+    }
+
+    /** @test */
+    public function 休憩中の場合_ステータスが休憩中と表示される()
+    {
+        $user = User::factory()->create();
+        Attendance::factory()->create([
+            'user_id' => $user->id,
+            'status' => '休憩中',
+        ]);
+        $this->actingAs($user);
+        $response = $this->get('/attendance/record');
+        $response->assertSee('休憩中');
+    }
+
+    /** @test */
+    public function 退勤済の場合_ステータスが退勤済と表示される()
+    {
+        $user = User::factory()->create();
+        Attendance::factory()->create([
+            'user_id' => $user->id,
+            'status' => '退勤済',
+        ]);
+        $this->actingAs($user);
+        $response = $this->get('/attendance/record');
+        $response->assertSee('退勤済');
+    }
+    /** @test */
+    public function 出勤ボタンを押すとステータスが出勤中になる()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        $response = $this->get('/attendance/record');
+        $response->assertSee('出勤');
+
+        $this->post('/attendance/store', ['type' => 'start']);
+
+        $this->assertDatabaseHas('attendances', [
+            'user_id' => $user->id,
+            'status' => '出勤中',
+        ]);
+    }
+
+    /** @test */
+    /** @test */
+    public function 出勤は一日一回しか登録されない()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        Carbon::setTestNow(Carbon::create(2025, 11, 7, 9, 0, 0));
+        $this->post('/attendance/store', ['type' => 'start']);
+
+        // 二度目の出勤を試みる
+        Carbon::setTestNow(Carbon::create(2025, 11, 7, 10, 0, 0));
+        $this->post('/attendance/store', ['type' => 'start']);
+
+        // ✅ 出勤レコードは1件しか存在しない
+        $this->assertDatabaseCount('attendances', 1);
+
+        // ✅ ステータスは出勤中のまま
+        $this->assertDatabaseHas('attendances', [
+            'user_id' => $user->id,
+            'status' => '出勤中',
+        ]);
+    }
+    /** @test */
+    public function 出勤時刻が勤怠一覧画面に反映される()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // 出勤処理
+        Carbon::setTestNow(Carbon::create(2025, 11, 7, 9, 0, 0));
+        $this->post('/attendance/store', ['type' => 'start']);
+
+        // 一覧を確認
+        $response = $this->get('/attendance');
+        $response->assertSee('09:00');
+    }
 }

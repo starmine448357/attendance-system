@@ -60,7 +60,7 @@
                     <td>{{ $request->note }}</td>
                     <td>{{ $request->created_at->format('Y/m/d') }}</td>
                     <td>
-                        <a href="{{ route('attendance.detail', $request->attendance_id) }}">詳細</a>
+                        <a href="{{ route('request.show', $request->id) }}">詳細</a>
                     </td>
                 </tr>
                 @endforeach

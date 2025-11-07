@@ -75,4 +75,16 @@ class RequestController extends Controller
 
         return redirect()->route('request.index', ['status' => 'pending']);
     }
+
+    /**
+     * 修正申請の詳細表示（閲覧専用）
+     */
+    public function show($id)
+    {
+        $requestData = AttendanceRequest::with('attendance')
+            ->where('user_id', Auth::id())
+            ->findOrFail($id);
+
+        return view('request.show', compact('requestData'));
+    }
 }

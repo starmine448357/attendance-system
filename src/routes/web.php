@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\AdminStaffController;
 use App\Http\Controllers\Admin\AdminRequestController;
 use App\Http\Controllers\Admin\AdminLoginController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Fortify 会員登録 上書き
@@ -35,7 +36,7 @@ Route::post('/login', function (LoginRequest $request) {
 
     if (!Auth::attempt($request->only('email', 'password'))) {
         throw ValidationException::withMessages([
-            'email' => ['ログイン情報が登録されていません。'],
+            'email' => ['ログイン情報が登録されていません'],
         ]);
     }
 
@@ -67,17 +68,17 @@ Route::post('/email/verify/resend-guest', function () {
     }
 
     if (!$userId) {
-        return back()->withErrors(['resend' => '再送できません。はじめから登録し直してください。']);
+        return back()->withErrors(['resend' => '再送できませんはじめから登録し直してください']);
     }
 
     $user = User::find($userId);
 
     if (!$user) {
-        return back()->withErrors(['resend' => 'ユーザーが見つかりません。再登録してください。']);
+        return back()->withErrors(['resend' => 'ユーザーが見つかりません再登録してください']);
     }
 
     if ($user->hasVerifiedEmail()) {
-        return redirect('/login')->with('status', 'すでに認証済みです。ログインしてください。');
+        return redirect('/login')->with('status', 'すでに認証済みですログインしてください');
     }
 
     $user->sendEmailVerificationNotification();
@@ -114,7 +115,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'index'])
         ->name('attendance.index');
 
-   // 勤怠詳細画面（一般ユーザー）
+    // 勤怠詳細画面（一般ユーザー）
     Route::get('/attendance/detail/{id}', [AttendanceController::class, 'show'])
         ->name('attendance.detail');
     // 修正申請一覧ページ
@@ -125,6 +126,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // 修正申請登録（POST）
     Route::post('/stamp_correction_request/store', [RequestController::class, 'store'])
         ->name('request.store');
+
+    // ✅ 修正申請詳細ページ（閲覧専用）
+    Route::get('/stamp_correction_request/show/{id}', [RequestController::class, 'show'])
+        ->name('request.show');
 });
 
 /*

@@ -66,46 +66,54 @@ class AttendanceController extends Controller
         $user = Auth::user();
         $today = now('Asia/Tokyo')->toDateString();
 
-        $attendance = Attendance::firstOrNew([
-            'user_id' => $user->id,
-            'date'    => $today,
-        ]);
+        $attendance = Attendance::where('user_id', $user->id)
+            ->whereDate('date', $today)
+            ->first();
 
         switch ($request->input('type')) {
 
             // 出勤
             case 'start':
-                $attendance->start_time = now('Asia/Tokyo');
-                $attendance->status = '出勤中';
-                $attendance->save();
+                // ✅ すでに今日の出勤データがある場合は新規作成を防止
+                if ($attendance) {
+                    return redirect()->route('attendance.record');
+                }
+
+                Attendance::create([
+                    'user_id' => $user->id,
+                    'date' => $today,
+                    'start_time' => now('Asia/Tokyo'),
+                    'status' => '出勤中',
+                ]);
                 break;
 
             // 休憩開始（新しい休憩を自動で追加）
             case 'break_start':
+                if (!$attendance) return redirect()->route('attendance.record');
+
                 $attendance->status = '休憩中';
                 $attendance->save();
 
                 $lastRest = $attendance->rests()->latest()->first();
 
                 if (!$lastRest || $lastRest->break_end !== null) {
-                    // 直前の休憩が終了済みなら新規追加
                     $attendance->rests()->create([
                         'break_start' => now('Asia/Tokyo'),
                     ]);
                 } else {
-                    // break_end が未入力のまま再度押された場合の安全対策
                     $lastRest->update(['break_start' => now('Asia/Tokyo')]);
                 }
                 break;
 
             // 休憩終了（最後の未完了休憩を閉じる）
             case 'break_end':
+                if (!$attendance) return redirect()->route('attendance.record');
+
                 $lastRest = $attendance->rests()->latest()->first();
                 if ($lastRest && !$lastRest->break_end) {
                     $lastRest->update(['break_end' => now('Asia/Tokyo')]);
                 }
 
-                // 総休憩時間を再計算
                 $totalBreak = $attendance->rests->sum(function ($r) {
                     if ($r->break_start && $r->break_end) {
                         return Carbon::parse($r->break_start)
@@ -122,6 +130,8 @@ class AttendanceController extends Controller
 
             // 退勤
             case 'end':
+                if (!$attendance) return redirect()->route('attendance.record');
+
                 $attendance->end_time = now('Asia/Tokyo');
 
                 if ($attendance->start_time && $attendance->end_time) {

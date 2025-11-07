@@ -31,31 +31,55 @@ class AdminAttendanceController extends Controller
     /**
      * 勤怠詳細（1件）
      */
-public function show($value)
-{
-    // 数字なら勤怠ID、日付形式なら指定日のデータ
-    if (ctype_digit($value)) {
-        $attendance = Attendance::with(['user', 'rests'])->find($value);
-    } else {
-        $attendance = Attendance::whereDate('date', Carbon::parse($value))
-            ->with(['user', 'rests'])
-            ->first();
+    public function show($value)
+    {
+        // 日付かIDかを判定
+        if (ctype_digit($value)) {
+            $attendance = Attendance::with(['user', 'rests'])->find($value);
+        } else {
+            $date = Carbon::parse($value)->toDateString();
+
+            // user_id を取得（クエリ or デフォルト）
+            $userId = request()->query('user_id');
+            if (!$userId) {
+                $userId = User::orderBy('id')->value('id'); // 仮に1人目を対象
+            }
+
+            // 勤怠データ取得 or 自動作成
+            $attendance = Attendance::firstOrCreate(
+                [
+                    'user_id' => $userId,
+                    'date' => $date,
+                ],
+                [
+                    'status' => '勤務外',
+                    'start_time' => null,
+                    'end_time' => null,
+                    'break_duration' => 0,
+                    'total_duration' => 0,
+                ]
+            );
+
+            // 関連をロード
+            $attendance->load(['user', 'rests']);
+        }
+
+        // ✅ rests を最低2件にしておく（休憩1・休憩2を常に表示）
+        $rests = $attendance->rests ?? collect();
+        $count = $rests->count();
+        if ($count < 2) {
+            for ($i = $count; $i < 2; $i++) {
+                $rests->push([
+                    'break_start' => null,
+                    'break_end' => null,
+                ]);
+            }
+        }
+        $attendance->rests = $rests;
+
+        return view('admin.attendance.show', compact('attendance'));
     }
 
-    // まだ出勤していない日（勤怠レコードが存在しない場合）
-    if (!$attendance) {
-        $attendance = new Attendance([
-            'date' => Carbon::parse($value),
-            'start_time' => null,
-            'end_time' => null,
-            'break_duration' => null,
-            'total_duration' => null,
-        ]);
-        $attendance->rests = collect(); // 空の休憩リストをセット
-    }
-
-    return view('admin.attendance.show', compact('attendance'));
-}
     /**
      * 勤怠更新（管理者による修正）
      */

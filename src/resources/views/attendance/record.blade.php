@@ -29,10 +29,12 @@
     {{-- ===============================
          日付と時刻（リアルタイム更新）
     =============================== --}}
-    <div class="record-date-time">
-        <p id="current-date" class="date"></p>
-        <p id="current-time" class="time"></p>
-    </div>
+    <p id="current-date" class="date">
+        {{ now()->format('Y年 n月 j日（D）') }}
+    </p>
+    <p id="current-time" class="time">
+        {{ now()->format('H:i') }}
+    </p>
 
     {{-- ===============================
          打刻ボタン

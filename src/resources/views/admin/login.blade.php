@@ -7,13 +7,13 @@
 @endsection
 
 @section('content')
-<form action="{{ route('admin.login.submit') }}" method="POST" class="authenticate center">
+<form action="{{ route('admin.login.submit') }}" method="POST" class="authenticate center" novalidate>
     @csrf
     <h1 class="page__title">管理者ログイン</h1>
 
     {{-- メールアドレス --}}
     <label for="email" class="entry__name">メールアドレス</label>
-    <input id="email" type="email" name="email" class="input" value="{{ old('email') }}" required autofocus>
+    <input id="email" type="email" name="email" class="input" value="{{ old('email') }}">
     <div class="form__error">
         @error('email')
         {{ $message }}
@@ -22,7 +22,7 @@
 
     {{-- パスワード --}}
     <label for="password" class="entry__name">パスワード</label>
-    <input id="password" type="password" name="password" class="input" required>
+    <input id="password" type="password" name="password" class="input">
     <div class="form__error">
         @error('password')
         {{ $message }}

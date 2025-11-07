@@ -11,7 +11,7 @@ class RegisterTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_fails_when_name_is_missing()
+    public function 名前が未入力の場合_バリデーションメッセージが表示される()
     {
         $response = $this->post('/register', [
             'name' => '',
@@ -19,35 +19,55 @@ class RegisterTest extends TestCase
             'password' => 'password123',
         ]);
 
-        $response->assertSessionHasErrors(['name' => 'お名前を入力してください。']);
+        $response->assertSessionHasErrors([
+            'name' => 'お名前を入力してください',
+        ]);
     }
 
     /** @test */
-    public function it_fails_when_email_is_invalid()
+    public function メールアドレスが未入力の場合_バリデーションメッセージが表示される()
     {
         $response = $this->post('/register', [
-            'name' => 'テスト',
-            'email' => 'invalid-email',
+            'name' => 'テストユーザー',
+            'email' => '',
             'password' => 'password123',
         ]);
 
-        $response->assertSessionHasErrors(['email' => 'メールアドレスの形式が正しくありません。']);
+        $response->assertSessionHasErrors([
+            'email' => 'メールアドレスを入力してください',
+        ]);
     }
 
     /** @test */
-    public function it_fails_when_password_is_too_short()
+    public function パスワードが8文字未満の場合_バリデーションメッセージが表示される()
     {
         $response = $this->post('/register', [
-            'name' => 'テスト',
+            'name' => 'テストユーザー',
             'email' => 'short@example.com',
-            'password' => '123',
+            'password' => '1234567',
         ]);
 
-        $response->assertSessionHasErrors(['password' => 'パスワードは8文字以上で入力してください。']);
+        $response->assertSessionHasErrors([
+            'password' => 'パスワードは8文字以上で入力してください',
+        ]);
     }
 
     /** @test */
-    public function it_registers_successfully_with_valid_data()
+    public function パスワードが未入力の場合_バリデーションメッセージが表示される()
+    {
+        $response = $this->post('/register', [
+            'name' => 'テストユーザー',
+            'email' => 'nopass@example.com',
+            'password' => '',
+        ]);
+
+        $response->assertSessionHasErrors([
+            'password' => 'パスワードを入力してください',
+        ]);
+    }
+
+    /** @test */
+    public function フォームに内容が正しく入力されていた場合_DBにユーザーが保存される()
     {
         $response = $this->post('/register', [
             'name' => 'テストユーザー',
@@ -56,6 +76,9 @@ class RegisterTest extends TestCase
         ]);
 
         $response->assertSessionHasNoErrors();
-        $this->assertDatabaseHas('users', ['email' => 'valid@example.com']);
+        $this->assertDatabaseHas('users', [
+            'email' => 'valid@example.com',
+            'name' => 'テストユーザー',
+        ]);
     }
 }
