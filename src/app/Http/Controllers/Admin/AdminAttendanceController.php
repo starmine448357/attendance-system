@@ -112,8 +112,7 @@ class AdminAttendanceController extends Controller
         }
 
         return redirect()
-            ->route('admin.attendance.show', $attendance->id)
-            ->with('status', '勤怠情報を更新しました。');
+            ->route('admin.attendance.show', $attendance->id);
     }
 
     /**

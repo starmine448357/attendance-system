@@ -14,12 +14,12 @@ $weekMap = ['Sun'=>'日','Mon'=>'月','Tue'=>'火','Wed'=>'水','Thu'=>'木','Fr
 
 /** 分数→HH:MM変換 */
 if (!function_exists('minutesToTimeFormat')) {
-    function minutesToTimeFormat($minutes) {
-        if ($minutes === null) return '';
-        $hours = floor($minutes / 60);
-        $mins = $minutes % 60;
-        return sprintf('%02d:%02d', $hours, $mins);
-    }
+function minutesToTimeFormat($minutes) {
+if ($minutes === null) return '';
+$hours = floor($minutes / 60);
+$mins = $minutes % 60;
+return sprintf('%02d:%02d', $hours, $mins);
+}
 }
 @endphp
 
@@ -68,27 +68,27 @@ if (!function_exists('minutesToTimeFormat')) {
         </thead>
         <tbody>
             @foreach ($days as $day)
-                @php
-                    $key = $day->format('Y-m-d');
-                    $record = $attendances[$key] ?? null;
-                @endphp
-                <tr>
-                    <td>{{ $day->format('m/d') }} ({{ $weekMap[$day->format('D')] }})</td>
-                    <td>{{ $record?->start_time ? Carbon::parse($record->start_time)->format('H:i') : '' }}</td>
-                    <td>{{ $record?->end_time ? Carbon::parse($record->end_time)->format('H:i') : '' }}</td>
-                    <td>{{ minutesToTimeFormat($record?->break_duration) }}</td>
-                    <td>{{ minutesToTimeFormat($record?->total_duration) }}</td>
-                    <td>
-                        {{-- ✅ 出勤がある日は attendance.id で詳細へ --}}
-                        {{-- 出勤がない日は date をパラメータで渡す --}}
-                        <a href="{{ $record 
+            @php
+            $key = $day->format('Y-m-d');
+            $record = $attendances[$key] ?? null;
+            @endphp
+            <tr>
+                <td>{{ $day->format('m/d') }} ({{ $weekMap[$day->format('D')] }})</td>
+                <td>{{ $record?->start_time ? Carbon::parse($record->start_time)->format('H:i') : '' }}</td>
+                <td>{{ $record?->end_time ? Carbon::parse($record->end_time)->format('H:i') : '' }}</td>
+                <td>{{ minutesToTimeFormat($record?->break_duration) }}</td>
+                <td>{{ minutesToTimeFormat($record?->total_duration) }}</td>
+                <td>
+                    {{-- ✅ 出勤がある日は attendance.id で詳細へ --}}
+                    {{-- 出勤がない日は date をパラメータで渡す --}}
+                    <a href="{{ $record 
                             ? route('admin.attendance.show', $record->id) 
                             : route('admin.attendance.show', ['id' => $key]) 
                         }}" class="detail-link">
-                            詳細
-                        </a>
-                    </td>
-                </tr>
+                        詳細
+                    </a>
+                </td>
+            </tr>
             @endforeach
         </tbody>
     </table>

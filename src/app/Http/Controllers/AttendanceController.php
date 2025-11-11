@@ -74,7 +74,6 @@ class AttendanceController extends Controller
 
             // 出勤
             case 'start':
-                // ✅ すでに今日の出勤データがある場合は新規作成を防止
                 if ($attendance) {
                     return redirect()->route('attendance.record');
                 }

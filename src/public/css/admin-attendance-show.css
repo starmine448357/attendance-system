@@ -1,21 +1,33 @@
-/* ===============================
+/* ==================================================
    管理者 勤怠詳細 共通デザイン
-================================ */
+   --------------------------------------------------
+   - 全体設定
+   - コンテナ／タイトル
+   - テーブル構造
+   - 入力・表示エリア
+   - エラーメッセージ
+   - ボタン
+   - レスポンシブ対応
+================================================== */
 
+/* ===============================
+   全体設定
+=============================== */
 body {
     font-family: "Inter", "Noto Sans JP", sans-serif;
     background-color: #F0EFF2;
     margin: 0;
 }
 
-/* コンテナ */
+/* ===============================
+   コンテナ／タイトル
+=============================== */
 .attendance-detail-container {
     max-width: 900px;
     margin: 80px auto 120px;
     padding: 0 30px;
 }
 
-/* 見出し（縦線付き） */
 .page-title {
     font-size: 28px;
     font-weight: 700;
@@ -24,7 +36,9 @@ body {
     padding-left: 16px;
 }
 
-/* テーブル全体 */
+/* ===============================
+   テーブル構造
+=============================== */
 .detail-table {
     background: #fff;
     border-radius: 14px;
@@ -32,10 +46,10 @@ body {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
-/* 各行 */
+/* ---- 行構成 ---- */
 .row {
     position: relative;
-    /* ← エラーメッセージ位置の基準 */
+    /* ← error-message の位置基準 */
     display: flex;
     align-items: center;
     padding: 30px 60px;
@@ -46,7 +60,7 @@ body {
     border-bottom: none;
 }
 
-/* ラベル */
+/* ---- ラベル ---- */
 .label {
     width: 200px;
     font-size: 16px;
@@ -55,7 +69,7 @@ body {
     letter-spacing: 0.15em;
 }
 
-/* 値 */
+/* ---- 値 ---- */
 .value {
     flex: 1;
     font-size: 20px;
@@ -68,24 +82,24 @@ body {
     line-height: 1.6;
 }
 
-/* 日付 */
+/* ---- 日付 ---- */
 .date-year {
     margin-right: 110px;
     font-size: 20px;
     font-weight: 600;
 }
 
-/* 出勤・退勤・休憩欄 */
+/* ===============================
+   入力・表示エリア
+=============================== */
 .center-inputs {
     display: flex;
     align-items: center;
     gap: 34px;
-    position: relative;
-    /* 絶対配置基準 */
     width: 100%;
 }
 
-/* time入力＆値の共通化 */
+/* ---- time入力／値 ---- */
 .center-inputs input[type="time"],
 .center-inputs .value-time {
     width: 103px;
@@ -96,50 +110,56 @@ body {
     font-weight: 700;
     text-align: center;
     color: #000;
-    font-family: "Inter", "Noto Sans JP", sans-serif;
     background: #fff;
 }
 
-/* 「〜」 */
+/* ---- 「〜」 ---- */
 .center-inputs span {
     font-size: 20px;
     font-weight: 600;
     color: #000;
 }
 
-/* 備考欄 */
+/* ---- 備考欄 ---- */
 textarea {
-    width: 75%;
+    width: 70%;
     min-height: 80px;
     font-size: 16px;
     border: 1px solid #D3D3D3;
     border-radius: 6px;
     padding: 10px;
-    font-family: inherit;
     background: #fff;
     resize: none;
+    font-family: inherit;
 }
 
-/* エラーメッセージ（右寄せ・中央揃え） */
+/* ===============================
+   エラーメッセージ
+=============================== */
 .error-message {
     color: #ff4d4d;
     font-size: 13px;
+    font-weight: 800;
     position: absolute;
-    right: 10px;
-    /* フォーム右端から10px */
+    right: 20px;
     top: 50%;
-    /* 高さ中央寄せ */
     transform: translateY(-50%);
     white-space: nowrap;
 }
 
-/* 修正ボタン */
+/* ===============================
+   ボタン
+=============================== */
+.button-area {
+    text-align: right;
+    margin-top: 40px;
+}
+
+/* ---- 修正ボタン ---- */
 .submit-btn {
-    display: block;
+    display: inline-block;
     width: 130px;
     height: 50px;
-    margin-left: auto;
-    margin-top: 40px;
     background: #000;
     color: #fff;
     font-size: 17px;
@@ -156,24 +176,7 @@ textarea {
     transform: translateY(-2px);
 }
 
-/* 承認待ちメッセージ */
-.pending-message {
-    text-align: right;
-    color: #E65C5C;
-    margin-top: 30px;
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    padding-right: 20px;
-}
-
-/* ボタンエリア */
-.button-area {
-    text-align: right;
-    margin-top: 40px;
-}
-
-/* 承認済みボタン（修正ボタンと統一サイズ・形） */
+/* ---- 承認済みボタン ---- */
 .approved-btn {
     display: inline-block;
     width: 130px;
@@ -190,7 +193,9 @@ textarea {
     cursor: default;
 }
 
-/* モバイル対応 */
+/* ===============================
+   レスポンシブ対応
+=============================== */
 @media (max-width: 768px) {
     .center-inputs {
         flex-direction: column;
@@ -200,5 +205,12 @@ textarea {
 
     .value {
         padding-left: 0;
+    }
+
+    .error-message {
+        position: static;
+        transform: none;
+        margin-top: 6px;
+        margin-left: 0;
     }
 }

@@ -1,31 +1,44 @@
-/* ===============================
-   管理者 勤怠／申請 詳細共通CSS
-================================ */
+/* ==================================================
+   管理者 勤怠／申請 詳細 共通デザイン
+   --------------------------------------------------
+   - 全体設定
+   - コンテナ／タイトル
+   - テーブル構造
+   - 入力・表示エリア
+   - ボタン
+   - ステータスメッセージ
+   - レスポンシブ対応
+================================================== */
 
+/* ===============================
+   全体設定
+=============================== */
 body {
     font-family: "Inter", "Noto Sans JP", sans-serif;
     background-color: #F0EFF2;
     margin: 0;
 }
 
-/* コンテナ */
+/* ===============================
+   コンテナ／タイトル
+=============================== */
 .attendance-detail-container {
     max-width: 900px;
     margin: 80px auto 120px;
     padding: 0 30px;
 }
 
-/* タイトル */
 .page-title {
     font-size: 28px;
     font-weight: 700;
     margin-bottom: 40px;
     border-left: 8px solid #000;
-    /* ← これで縦線 */
     padding-left: 16px;
-    /* 文字との間隔 */
 }
-/* テーブル */
+
+/* ===============================
+   テーブル構造
+=============================== */
 .detail-table {
     background: #fff;
     border-radius: 14px;
@@ -33,7 +46,7 @@ body {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
-/* 行 */
+/* ---- 行 ---- */
 .row {
     display: flex;
     align-items: center;
@@ -45,7 +58,7 @@ body {
     border-bottom: none;
 }
 
-/* ラベル */
+/* ---- ラベル ---- */
 .label {
     width: 200px;
     font-size: 16px;
@@ -54,7 +67,7 @@ body {
     letter-spacing: 0.15em;
 }
 
-/* 値 */
+/* ---- 値 ---- */
 .value {
     flex: 1;
     font-size: 20px;
@@ -67,14 +80,32 @@ body {
     line-height: 1.6;
 }
 
-/* 日付 */
+/* ---- 日付 ---- */
 .date-year {
     margin-right: 110px;
     font-size: 20px;
     font-weight: 600;
 }
 
-/* 承認ボタン */
+/* ===============================
+   入力・表示エリア
+=============================== */
+.center-inputs {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 60px;
+}
+
+.center-inputs span {
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+}
+
+/* ===============================
+   ボタン
+=============================== */
 .button-area {
     text-align: right;
     margin-top: 40px;
@@ -96,7 +127,7 @@ body {
     transition: opacity 0.2s, transform 0.1s ease;
 }
 
-/* 黒の「承認」ボタン */
+/* ---- 黒の「承認」ボタン ---- */
 .approve-btn {
     background: #000;
     cursor: pointer;
@@ -107,46 +138,34 @@ body {
     transform: translateY(-2px);
 }
 
-/* グレーの「承認済み」ボタン */
+/* ---- グレーの「承認済み」ボタン ---- */
 .approved-btn {
     background: #696969;
     cursor: default;
 }
 
-/* 出勤・退勤・休憩 */
-.center-inputs {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 60px;
-}
-
-.center-inputs span {
-    font-size: 20px;
-    font-weight: 600;
-    color: #000;
-}
-
 /* ===============================
    ステータスメッセージ（閲覧専用画面）
-================================ */
+=============================== */
 .pending-message {
     text-align: right;
     color: #E74C3C;
-    /* 赤 */
+    font-weight: 800;
     font-size: 14px;
     margin-top: 10px;
 }
 
 .approved-message {
     text-align: right;
-    color: #E74C3C;   
+    font-weight: 800;
+    color: #E74C3C;
     font-size: 14px;
     margin-top: 10px;
 }
 
-
-/* モバイル対応 */
+/* ===============================
+   レスポンシブ対応
+=============================== */
 @media (max-width: 768px) {
     .center-inputs {
         flex-direction: column;

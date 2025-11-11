@@ -9,7 +9,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('attendance_requests', function (Blueprint $table) {
-            // ✅ 休憩3件目以降を格納するJSONカラムを追加
             $table->json('extra_rests_json')->nullable()->after('break_end_2');
         });
     }

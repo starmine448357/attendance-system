@@ -25,11 +25,13 @@ $targetDate = $attendance?->date ?? Carbon::parse(request()->route('id'));
         <input type="hidden" name="date" value="{{ $targetDate->format('Y-m-d') }}">
 
         <div class="detail-table">
+            {{-- 名前 --}}
             <div class="row">
                 <div class="label">名前</div>
                 <div class="value">{{ Auth::user()->name }}</div>
             </div>
 
+            {{-- 日付 --}}
             <div class="row">
                 <div class="label">日付</div>
                 <div class="value">
@@ -45,13 +47,13 @@ $targetDate = $attendance?->date ?? Carbon::parse(request()->route('id'));
                     <input type="time" name="start_time" value="{{ old('start_time') }}">
                     <span>〜</span>
                     <input type="time" name="end_time" value="{{ old('end_time') }}">
-                    @error('start_time')
-                    <div class="error-message">{{ $message }}</div>
-                    @enderror
-                    @error('end_time')
-                    <div class="error-message">{{ $message }}</div>
-                    @enderror
                 </div>
+                @error('start_time')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
+                @error('end_time')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
             </div>
 
             {{-- 休憩1・2固定 --}}
@@ -62,25 +64,25 @@ $targetDate = $attendance?->date ?? Carbon::parse(request()->route('id'));
                     <input type="time" name="rests[{{ $i }}][break_start]" value="{{ old("rests.$i.break_start") }}">
                     <span>〜</span>
                     <input type="time" name="rests[{{ $i }}][break_end]" value="{{ old("rests.$i.break_end") }}">
-                    @error("rests.$i.break_start")
-                    <div class="error-message">{{ $message }}</div>
-                    @enderror
-                    @error("rests.$i.break_end")
-                    <div class="error-message">{{ $message }}</div>
-                    @enderror
                 </div>
+                @error("rests.$i.break_start")
+                <div class="error-message">{{ $message }}</div>
+                @enderror
+                @error("rests.$i.break_end")
+                <div class="error-message">{{ $message }}</div>
+                @enderror
         </div>
         @endfor
 
         {{-- 備考 --}}
         <div class="row">
             <div class="label">備考</div>
-            <div class="value center-inputs">
+            <div class="value">
                 <textarea name="note">{{ old('note') }}</textarea>
-                @error('note')
-                <div class="error-message">{{ $message }}</div>
-                @enderror
             </div>
+            @error('note')
+            <div class="error-message">{{ $message }}</div>
+            @enderror
         </div>
 </div>
 
@@ -96,11 +98,13 @@ $targetDate = $attendance?->date ?? Carbon::parse(request()->route('id'));
     <input type="hidden" name="attendance_id" value="{{ $attendance->id }}">
 
     <div class="detail-table">
+        {{-- 名前 --}}
         <div class="row">
             <div class="label">名前</div>
             <div class="value">{{ $attendance->user->name }}</div>
         </div>
 
+        {{-- 日付 --}}
         <div class="row">
             <div class="label">日付</div>
             <div class="value">
@@ -118,13 +122,13 @@ $targetDate = $attendance?->date ?? Carbon::parse(request()->route('id'));
                 <span>〜</span>
                 <input type="time" name="end_time"
                     value="{{ old('end_time', $attendance->end_time ? Carbon::parse($attendance->end_time)->format('H:i') : '') }}">
-                @error('start_time')
-                <div class="error-message">{{ $message }}</div>
-                @enderror
-                @error('end_time')
-                <div class="error-message">{{ $message }}</div>
-                @enderror
             </div>
+            @error('start_time')
+            <div class="error-message">{{ $message }}</div>
+            @enderror
+            @error('end_time')
+            <div class="error-message">{{ $message }}</div>
+            @enderror
         </div>
 
         {{-- 休憩1・2固定 --}}
@@ -140,29 +144,29 @@ $targetDate = $attendance?->date ?? Carbon::parse(request()->route('id'));
             <div class="label">休憩{{ $i + 1 }}</div>
             <div class="value center-inputs">
                 <input type="time" name="rests[{{ $i }}][break_start]"
-                    value="{{ $rest['break_start'] ? Carbon::parse($rest['break_start'])->format('H:i') : '' }}">
+                    value="{{ old("rests.$i.break_start", $rest['break_start'] ? Carbon::parse($rest['break_start'])->format('H:i') : '') }}">
                 <span>〜</span>
                 <input type="time" name="rests[{{ $i }}][break_end]"
-                    value="{{ $rest['break_end'] ? Carbon::parse($rest['break_end'])->format('H:i') : '' }}">
-                @error("rests.$i.break_start")
-                <div class="error-message">{{ $message }}</div>
-                @enderror
-                @error("rests.$i.break_end")
-                <div class="error-message">{{ $message }}</div>
-                @enderror
+                    value="{{ old("rests.$i.break_end", $rest['break_end'] ? Carbon::parse($rest['break_end'])->format('H:i') : '') }}">
             </div>
+            @error("rests.$i.break_start")
+            <div class="error-message">{{ $message }}</div>
+            @enderror
+            @error("rests.$i.break_end")
+            <div class="error-message">{{ $message }}</div>
+            @enderror
         </div>
         @endforeach
 
         {{-- 備考 --}}
         <div class="row">
             <div class="label">備考</div>
-            <div class="value center-inputs">
+            <div class="value">
                 <textarea name="note">{{ old('note', $attendance->note) }}</textarea>
-                @error('note')
-                <div class="error-message">{{ $message }}</div>
-                @enderror
             </div>
+            @error('note')
+            <div class="error-message">{{ $message }}</div>
+            @enderror
         </div>
     </div>
 

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->time('break_end')->nullable();
             $table->time('end_time')->nullable();
 
-            $table->integer('break_duration')->default(0);  // 休憩合計（分）
-            $table->integer('total_duration')->default(0);  // ✅ 追加！
+            $table->integer('break_duration')->default(0);  
+            $table->integer('total_duration')->default(0);  
 
             $table->string('status')->nullable();
             $table->timestamps();

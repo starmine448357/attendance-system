@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
                 'name' => "従業員{$i}",
                 'email' => "employee{$i}@example.com",
                 'password' => Hash::make('password123'),
-                'email_verified_at' => now(), // 認証済み状態にする
+                'email_verified_at' => now(), 
             ]);
         }
     }

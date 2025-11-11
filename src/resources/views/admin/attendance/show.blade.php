@@ -9,10 +9,9 @@
 @section('content')
 <div class="attendance-detail-container">
 
-
     <h1 class="page-title">勤怠詳細</h1>
 
-    <form method="POST" action="{{ route('admin.attendance.update', $attendance->id) }}">
+    <form method="POST" action="{{ route('admin.attendance.update', $attendance->id) }}" novalidate>
         @csrf
         @method('PUT')
 
@@ -48,13 +47,15 @@
                     <input type="time" name="end_time"
                         value="{{ old('end_time', $attendance->end_time ? \Carbon\Carbon::parse($attendance->end_time)->format('H:i') : '') }}">
                 </div>
+
+                {{-- ✅ エラーメッセージをこの中に配置 --}}
+                @error('start_time')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
+                @error('end_time')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
             </div>
-            @error('start_time')
-            <div class="error-message">{{ $message }}</div>
-            @enderror
-            @error('end_time')
-            <div class="error-message">{{ $message }}</div>
-            @enderror
 
             {{-- ===============================
                  休憩 全件出力
@@ -74,6 +75,8 @@
                     <input type="time" name="rests[{{ $i }}][break_end]"
                         value="{{ old("rests.$i.break_end", $rest['break_end'] ? \Carbon\Carbon::parse($rest['break_end'])->format('H:i') : '') }}">
                 </div>
+
+                {{-- ✅ 各休憩行の中にエラー --}}
                 @error("rests.$i.break_start")
                 <div class="error-message">{{ $message }}</div>
                 @enderror
@@ -91,6 +94,8 @@
                 <div class="value">
                     <textarea name="note">{{ old('note', $attendance->note) }}</textarea>
                 </div>
+
+                {{-- ✅ 備考のエラーも中に --}}
                 @error('note')
                 <div class="error-message">{{ $message }}</div>
                 @enderror

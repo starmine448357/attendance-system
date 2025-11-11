@@ -8,12 +8,21 @@
 
 @section('content')
 @php
-$weekMap = ['Sun'=>'日','Mon'=>'月','Tue'=>'火','Wed'=>'水','Thu'=>'木','Fri'=>'金','Sat'=>'土'];
+$weekMap = [
+'Sun' => '日',
+'Mon' => '月',
+'Tue' => '火',
+'Wed' => '水',
+'Thu' => '木',
+'Fri' => '金',
+'Sat' => '土',
+];
 
 /**
 * ✅ 分数 → HH:MM 形式へ変換するヘルパー
 */
-function minutesToTimeFormat($minutes) {
+function minutesToTimeFormat($minutes)
+{
 if ($minutes === null) return '';
 $hours = floor($minutes / 60);
 $mins = $minutes % 60;
@@ -22,23 +31,27 @@ return sprintf('%02d:%02d', $hours, $mins);
 @endphp
 
 <div class="attendance-index">
+
     {{-- ===============================
-         タイトル部分（例：2025年10月30日の勤怠）
+        タイトル部分（例：2025年10月30日の勤怠）
     =============================== --}}
     <h1 class="page-title">
         {{ $currentDate->format('Y年n月j日') }}の勤怠
     </h1>
 
     {{-- ===============================
-         日付移動カード
+        日付移動カード
     =============================== --}}
     <div class="day-card">
+
+        {{-- 前日ボタン --}}
         <a href="{{ route('admin.attendance.index', ['date' => $currentDate->copy()->subDay()->format('Y-m-d')]) }}"
             class="day-card__btn day-card__btn--left">
             <img src="{{ asset('images/arrow-left.png') }}" class="arrow-icon" alt="prev">
             前日
         </a>
 
+        {{-- 中央部（カレンダー表示） --}}
         <div class="day-card__center">
             <img src="{{ asset('images/calendar.png') }}" class="day-card__icon" alt="calendar">
             <span class="day-card__text current-day">
@@ -46,6 +59,7 @@ return sprintf('%02d:%02d', $hours, $mins);
             </span>
         </div>
 
+        {{-- 翌日ボタン --}}
         <a href="{{ route('admin.attendance.index', ['date' => $currentDate->copy()->addDay()->format('Y-m-d')]) }}"
             class="day-card__btn day-card__btn--right">
             翌日
@@ -54,7 +68,7 @@ return sprintf('%02d:%02d', $hours, $mins);
     </div>
 
     {{-- ===============================
-         勤怠テーブル
+        勤怠テーブル
     =============================== --}}
     <table class="attendance-table">
         <thead>
@@ -67,6 +81,7 @@ return sprintf('%02d:%02d', $hours, $mins);
                 <th>詳細</th>
             </tr>
         </thead>
+
         <tbody>
             @foreach ($attendances as $attendance)
             <tr>
@@ -84,5 +99,6 @@ return sprintf('%02d:%02d', $hours, $mins);
             @endforeach
         </tbody>
     </table>
+
 </div>
 @endsection

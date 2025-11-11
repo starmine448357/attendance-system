@@ -1,28 +1,41 @@
-/* ===============================
+/* ==================================================
    勤怠打刻ページ（上寄せ＋拡大版）
-================================ */
+   --------------------------------------------------
+   - 全体設定
+   - 配置レイアウト
+   - ステータス表示
+   - 日付と時刻
+   - ボタン
+   - お疲れ様メッセージ
+================================================== */
+
+/* ===============================
+   全体設定
+=============================== */
 body {
     font-family: "Inter", "Noto Sans JP", sans-serif;
     background-color: #F0EFF2;
     margin: 0;
 }
 
-/* 全体配置（中央→やや上寄せ） */
+/* ===============================
+   配置レイアウト
+=============================== */
 .record-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    /* ✅ 上寄せ */
+    /* 上寄せ */
     min-height: calc(100vh - 80px);
     text-align: center;
     padding-top: 150px;
-    /* ✅ 上余白控えめ（前:20px→70px） */
+    /* 上余白（以前より広め） */
 }
 
 /* ===============================
-   ステータス（勤務外・出勤中・休憩中）
-================================ */
+   ステータス表示（勤務外・出勤中・休憩中）
+=============================== */
 .record-status {
     margin-bottom: 45px;
 }
@@ -30,26 +43,23 @@ body {
 .status {
     display: inline-block;
     font-size: 22px;
-    /* ✅ 少し拡大（20px→22px） */
     font-weight: 600;
     border-radius: 30px;
     padding: 10px 30px;
     letter-spacing: 0.6px;
     background-color: #C8C8C8;
-    /* ✅ 統一カラー */
     color: #333;
 }
 
 /* ===============================
    日付と時刻
-================================ */
+=============================== */
 .record-date-time {
     margin-bottom: 60px;
 }
 
 .date {
     font-size: 34px;
-    /* ✅ 拡大（28px→34px） */
     font-weight: 500;
     color: #000;
     letter-spacing: 1px;
@@ -59,7 +69,6 @@ body {
 
 .time {
     font-size: 110px;
-    /* ✅ 大きめ（100px→110px） */
     font-weight: 700;
     color: #000;
     letter-spacing: 2px;
@@ -67,8 +76,8 @@ body {
 }
 
 /* ===============================
-   ボタンエリア
-================================ */
+   ボタン
+=============================== */
 .record-buttons {
     display: flex;
     justify-content: center;
@@ -77,7 +86,7 @@ body {
     margin-top: 60px;
 }
 
-/* ボタン共通（変更なし） */
+/* ---- ボタン共通 ---- */
 .btn {
     font-size: 24px;
     font-weight: 700;
@@ -89,7 +98,7 @@ body {
     line-height: 1;
 }
 
-/* 黒ボタン */
+/* ---- 黒ボタン ---- */
 .btn.black {
     background-color: #000;
     color: #fff;
@@ -101,7 +110,7 @@ body {
     transform: translateY(-2px);
 }
 
-/* 白ボタン */
+/* ---- 白ボタン ---- */
 .btn.white {
     background-color: #fff;
     color: #000;
@@ -115,12 +124,11 @@ body {
 
 /* ===============================
    お疲れ様メッセージ
-================================ */
+=============================== */
 .finish-text {
+    font-size: 24px;
     font-weight: 600;
     color: #333;
     margin-top: 40px;
-    font-size: 24px;
-    /* ✅ 拡大（22px→24px） */
     letter-spacing: 0.4px;
 }

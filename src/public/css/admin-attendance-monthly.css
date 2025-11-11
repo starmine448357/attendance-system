@@ -46,6 +46,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* ---- ボタン（前月・翌月） ---- */
 .month-card__btn {
     display: flex;
     align-items: center;
@@ -61,6 +62,7 @@ body {
     opacity: 0.7;
 }
 
+/* ---- アイコン ---- */
 .arrow-icon {
     width: 18px;
     height: 18px;
@@ -71,7 +73,7 @@ body {
     transform: scaleX(-1);
 }
 
-/* 中央部分 */
+/* ---- 中央部分 ---- */
 .month-card__center {
     position: absolute;
     left: 50%;
@@ -106,6 +108,7 @@ body {
     table-layout: fixed;
 }
 
+/* ---- ヘッダー行 ---- */
 .attendance-table th {
     background-color: #fff;
     font-weight: 700;
@@ -116,6 +119,7 @@ body {
     font-size: 18px;
 }
 
+/* ---- データ行 ---- */
 .attendance-table td {
     padding: 26px 34px;
     text-align: center;
@@ -124,23 +128,28 @@ body {
     color: #737373;
 }
 
+/* ---- 名前列左寄せ ---- */
 .attendance-table td:first-child,
 .attendance-table th:first-child {
     text-align: left;
     padding-left: 50px;
 }
 
+/* ---- 最終行ボーダー削除 ---- */
 .attendance-table tbody tr:last-child td {
     border-bottom: none;
 }
 
+/* ---- データなし行 ---- */
 .no-data {
     text-align: center;
     color: #999;
     padding: 40px 0;
 }
 
-/* 詳細リンク */
+/* ===============================
+   詳細リンク
+================================ */
 .detail-link {
     text-decoration: none;
     font-weight: 700;

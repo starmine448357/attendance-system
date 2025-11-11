@@ -1,6 +1,17 @@
+/* ==================================================
+   認証フォーム共通（ログイン・登録・認証メール）
+   --------------------------------------------------
+   - フォーム共通デザイン
+   - 全体リセット
+   - ヘッダー
+   - ページ別調整（ログイン / 登録 / 認証）
+   - バリデーションエラー
+   - レスポンシブ対応
+================================================== */
+
 /* ===============================
-   ログイン・登録フォーム共通
-================================ */
+   フォーム共通デザイン
+=============================== */
 .authenticate {
     width: 100%;
     max-width: 600px;
@@ -33,6 +44,7 @@
     font-size: 17px;
 }
 
+/* ---- 大ボタン ---- */
 .btn--big {
     width: 100%;
     margin-top: 50px;
@@ -51,6 +63,7 @@
     opacity: 0.85;
 }
 
+/* ---- 下部リンク ---- */
 .link {
     display: block;
     text-align: center;
@@ -66,7 +79,7 @@
 
 /* ===============================
    全体リセット
-================================ */
+=============================== */
 * {
     box-sizing: border-box;
 }
@@ -79,7 +92,7 @@ body {
 
 /* ===============================
    ヘッダー
-================================ */
+=============================== */
 .user-header {
     background-color: #000;
     padding: 12px 24px;
@@ -90,15 +103,15 @@ body {
 }
 
 /* ===============================
-   ログインページ用微調整
-================================ */
+   ページ別調整
+=============================== */
+
+/* ---- ログインページ ---- */
 .authenticate.login-form input[type="password"] {
     margin-bottom: 20px;
 }
 
-/* ===============================
-   会員登録ページ用微調整
-================================ */
+/* ---- 会員登録ページ ---- */
 form.authenticate.register-form .entry__name {
     margin: 22px 0 8px 0;
 }
@@ -111,9 +124,7 @@ form.authenticate.register-form .btn--big {
     margin-top: 40px;
 }
 
-/* ===============================
-   メール認証ページ（最終安定版 / Fortify対応）
-================================ */
+/* ---- メール認証ページ ---- */
 .verify-container {
     display: flex;
     flex-direction: column;
@@ -134,7 +145,7 @@ form.authenticate.register-form .btn--big {
     font-weight: 700;
 }
 
-/* 「認証はこちらから」ボタン */
+/* 認証ボタン */
 .verify-container .btn--secondary {
     display: inline-block;
     font-size: 20px;
@@ -149,13 +160,12 @@ form.authenticate.register-form .btn--big {
     text-decoration: none;
 }
 
-/* ホバー時（有効時のみ） */
 .verify-container .btn--secondary:hover {
     background-color: #CFCFCF;
     color: #000;
 }
 
-/* Fortifyの無効化状態（未認証時など） */
+/* 無効状態（未認証時など） */
 .verify-container .btn--secondary[style*="pointer-events:none"] {
     opacity: 1;
     color: #000;
@@ -164,7 +174,7 @@ form.authenticate.register-form .btn--big {
     text-decoration: none;
 }
 
-/* 再送リンク（現状維持） */
+/* 再送リンク */
 .verify-container .link-btn {
     margin-top: 25px;
     font-size: 16px;
@@ -181,18 +191,18 @@ form.authenticate.register-form .btn--big {
 }
 
 /* ===============================
-   バリデーションエラー表示
-================================ */
+   バリデーションエラー
+=============================== */
 .form__error {
     color: #FF3B30;
-    /* 赤文字 */
     font-size: 15px;
     margin-top: 6px;
     font-weight: 600;
 }
+
 /* ===============================
    レスポンシブ対応
-================================ */
+=============================== */
 @media (max-width: 768px) {
     .authenticate {
         padding: 40px 30px;

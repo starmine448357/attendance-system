@@ -1,6 +1,17 @@
-/* ===============================
+/* ==================================================
    スタッフ 勤怠一覧 - ゆったり拡大版（文字色統一版）
-================================ */
+   --------------------------------------------------
+   - 全体設定
+   - コンテナ／タイトル
+   - 月移動カード
+   - 勤怠テーブル
+   - 詳細リンク
+   - レスポンシブ対応
+================================================== */
+
+/* ===============================
+   全体設定
+=============================== */
 body {
     font-family: "Inter", "Noto Sans JP", sans-serif;
     background-color: #F0EFF2;
@@ -11,17 +22,14 @@ body {
 }
 
 /* ===============================
-   コンテナ全体
-================================ */
+   コンテナ／タイトル
+=============================== */
 .attendance-index {
     width: 96%;
     max-width: 1200px;
     margin: 100px auto 160px;
 }
 
-/* ===============================
-   タイトル（縦線付き）
-================================ */
 .page-title {
     font-size: 30px;
     font-weight: 700;
@@ -33,7 +41,7 @@ body {
 
 /* ===============================
    月移動カード
-================================ */
+=============================== */
 .month-card {
     position: relative;
     display: flex;
@@ -46,7 +54,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* ボタン（前月・翌月） */
+/* ---- ボタン（前月・翌月） ---- */
 .month-card__btn {
     display: flex;
     align-items: center;
@@ -62,7 +70,7 @@ body {
     opacity: 0.7;
 }
 
-/* アイコン */
+/* ---- アイコン ---- */
 .arrow-icon {
     width: 18px;
     height: 18px;
@@ -73,7 +81,7 @@ body {
     transform: scaleX(-1);
 }
 
-/* 中央部分 */
+/* ---- 中央部分 ---- */
 .month-card__center {
     position: absolute;
     left: 50%;
@@ -97,7 +105,7 @@ body {
 
 /* ===============================
    勤怠テーブル
-================================ */
+=============================== */
 .attendance-table {
     width: 100%;
     border-collapse: collapse;
@@ -108,7 +116,7 @@ body {
     table-layout: fixed;
 }
 
-/* 見出し・データ文字色を統一 */
+/* ---- ヘッダー ---- */
 .attendance-table th {
     background-color: #fff;
     font-weight: 700;
@@ -120,28 +128,31 @@ body {
     font-size: 18px;
 }
 
+/* ---- データ ---- */
 .attendance-table td {
     padding: 26px 34px;
     text-align: center;
     border-bottom: 1px solid #E5E5E5;
     font-size: 18px;
     color: #737373;
-    /* ✅ データ部分もグレー */
+    /* ✅ グレー */
 }
 
-/* 日付列は左寄せ */
-.attendance-table td:first-child,
-.attendance-table th:first-child {
+/* ---- 日付列は左寄せ ---- */
+.attendance-table th:first-child,
+.attendance-table td:first-child {
     text-align: left;
     padding-left: 50px;
 }
 
-/* 最後の行はボーダーなし */
+/* ---- 最終行のボーダー削除 ---- */
 .attendance-table tbody tr:last-child td {
     border-bottom: none;
 }
 
-/* 詳細リンク */
+/* ===============================
+   詳細リンク
+=============================== */
 .detail-link {
     text-decoration: none;
     font-weight: 700;
@@ -160,7 +171,7 @@ body {
 
 /* ===============================
    レスポンシブ対応
-================================ */
+=============================== */
 @media (max-width: 768px) {
     .attendance-index {
         width: 95%;
