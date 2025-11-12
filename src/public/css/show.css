@@ -125,8 +125,11 @@ textarea {
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
-    white-space: nowrap;
+    white-space: normal;
+    max-width: 180px;
+    line-height: 1.4;
 }
+
 
 /* 修正・申請ボタン */
 .submit-btn {
