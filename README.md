@@ -121,6 +121,16 @@ MAIL_FROM_NAME="勤怠管理システム"
 
 ---
 
+## ログインページURL
+
+### 一般ユーザー  
+- ログイン: http://localhost:8080/login  
+- 会員登録: http://localhost:8080/register  
+
+### 管理者ユーザー  
+- ログイン: http://localhost:8080/admin/login
+
+
 ## ログイン情報
 
 Seeder により初期データとして、管理者アカウント一件と一般ユーザーアカウント複数件が登録されています。  
