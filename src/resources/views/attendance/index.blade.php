@@ -82,8 +82,42 @@ return sprintf('%02d:%02d', $hours, $mins);
                 <td>{{ $day->format('m/d') }} ({{ $weekMap[$day->format('D')] }})</td>
                 <td>{{ $record?->start_time?->format('H:i') }}</td>
                 <td>{{ $record?->end_time?->format('H:i') }}</td>
-                <td>{{ minutesToTimeFormat($record?->break_duration) }}</td>
-                <td>{{ minutesToTimeFormat($record?->total_duration) }}</td>
+
+                {{-- 休憩時間 --}}
+                <td>
+                    @if ($record && $record->rests->count() > 0)
+                    @php
+                    $totalRestMinutes = $record->rests->sum(function ($rest) {
+                    if ($rest->break_start && $rest->break_end) {
+                    $start = \Carbon\Carbon::parse($rest->break_start);
+                    $end = \Carbon\Carbon::parse($rest->break_end);
+                    // 差が負にならないよう絶対値で計算
+                    return abs($end->diffInMinutes($start, false));
+                    }
+                    return 0;
+                    });
+                    @endphp
+                    {{ minutesToTimeFormat($totalRestMinutes) }}
+                    @else
+                    {{ minutesToTimeFormat($record?->break_duration) }}
+                    @endif
+                </td>
+
+                {{-- 合計（勤務時間 = 出勤〜退勤 − 休憩） --}}
+                <td>
+                    @if ($record && $record->start_time && $record->end_time)
+                    @php
+                    $start = \Carbon\Carbon::parse($record->start_time);
+                    $end = \Carbon\Carbon::parse($record->end_time);
+                    $restMinutes = $totalRestMinutes ?? ($record->break_duration ?? 0);
+                    $workMinutes = abs($end->diffInMinutes($start, false)) - $restMinutes;
+                    @endphp
+                    {{ minutesToTimeFormat(max($workMinutes, 0)) }}
+                    @else
+                    {{ minutesToTimeFormat($record?->total_duration) }}
+                    @endif
+                </td>
+
                 <td>
                     <a href="{{ $record ? route('attendance.detail', ['id' => $record->id]) : route('attendance.detail', ['id' => $key]) }}"
                         class="detail-link">

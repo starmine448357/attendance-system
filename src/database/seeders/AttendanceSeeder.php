@@ -16,7 +16,7 @@ class AttendanceSeeder extends Seeder
 
         foreach ($users as $user) {
             // 各従業員に3日分の勤怠データを作成
-            for ($d = 0; $d < 3; $d++) {
+            for ($d = 0; $d < 30; $d++) {
                 $date = Carbon::today()->subDays($d);
 
                 $attendance = Attendance::create([

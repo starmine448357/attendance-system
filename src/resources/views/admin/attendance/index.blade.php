@@ -43,7 +43,6 @@ return sprintf('%02d:%02d', $hours, $mins);
         日付移動カード
     =============================== --}}
     <div class="day-card">
-
         {{-- 前日ボタン --}}
         <a href="{{ route('admin.attendance.index', ['date' => $currentDate->copy()->subDay()->format('Y-m-d')]) }}"
             class="day-card__btn day-card__btn--left">
@@ -84,19 +83,45 @@ return sprintf('%02d:%02d', $hours, $mins);
 
         <tbody>
             @foreach ($attendances as $attendance)
-            <tr>
+            @php
+            // 休憩合計（restsがある場合はその合計を優先）
+            $totalRestMinutes = 0;
+            if ($attendance->rests && $attendance->rests->count() > 0) {
+            $totalRestMinutes = $attendance->rests->sum(function ($rest) {
+            if ($rest->break_start && $rest->break_end) {
+            $start = \Carbon\Carbon::parse($rest->break_start);
+            $end = \Carbon\Carbon::parse($rest->break_end);
+            return abs($end->diffInMinutes($start, false));
+            }
+            return 0;
+            });
+            } elseif ($attendance->break_duration) {
+            $totalRestMinutes = $attendance->break_duration;
+            }
+
+            // 合計（出勤〜退勤 − 休憩）
+            $workMinutes = null;
+            if ($attendance->start_time && $attendance->end_time) {
+            $start = \Carbon\Carbon::parse($attendance->start_time);
+            $end = \Carbon\Carbon::parse($attendance->end_time);
+            $workMinutes = abs($end->diffInMinutes($start, false)) - $totalRestMinutes;
+            if ($workMinutes < 0) $workMinutes=0;
+                }
+                @endphp
+
+                <tr>
                 <td>{{ $attendance->user->name }}</td>
                 <td>{{ $attendance->start_time?->format('H:i') }}</td>
                 <td>{{ $attendance->end_time?->format('H:i') }}</td>
-                <td>{{ minutesToTimeFormat($attendance->break_duration) }}</td>
-                <td>{{ minutesToTimeFormat($attendance->total_duration) }}</td>
+                <td>{{ minutesToTimeFormat($totalRestMinutes) }}</td>
+                <td>{{ minutesToTimeFormat($workMinutes ?? $attendance->total_duration) }}</td>
                 <td>
                     <a href="{{ route('admin.attendance.show', $attendance->id) }}" class="detail-link">
                         詳細
                     </a>
                 </td>
-            </tr>
-            @endforeach
+                </tr>
+                @endforeach
         </tbody>
     </table>
 

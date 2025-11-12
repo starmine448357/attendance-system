@@ -53,7 +53,7 @@ return sprintf('%02d:%02d', $hours, $mins);
     </div>
 
     {{-- ===============================
-         勤怠テーブル（全日＋詳細リンクあり）
+         勤怠テーブル
     =============================== --}}
     <table class="attendance-table">
         <thead>
@@ -71,25 +71,48 @@ return sprintf('%02d:%02d', $hours, $mins);
             @php
             $key = $day->format('Y-m-d');
             $record = $attendances[$key] ?? null;
-            @endphp
-            <tr>
+
+            // ✅ 休憩合計（マイナス防止）
+            $totalRestMinutes = 0;
+            if ($record && $record->rests && $record->rests->count() > 0) {
+            $totalRestMinutes = $record->rests->sum(function ($rest) {
+            if ($rest->break_start && $rest->break_end) {
+            $start = \Carbon\Carbon::parse($rest->break_start);
+            $end = \Carbon\Carbon::parse($rest->break_end);
+            return abs($end->diffInMinutes($start, false));
+            }
+            return 0;
+            });
+            } elseif ($record?->break_duration) {
+            $totalRestMinutes = $record->break_duration;
+            }
+
+            // ✅ 労働合計（出勤～退勤 － 休憩）
+            $workMinutes = null;
+            if ($record?->start_time && $record?->end_time) {
+            $start = \Carbon\Carbon::parse($record->start_time);
+            $end = \Carbon\Carbon::parse($record->end_time);
+            $workMinutes = abs($end->diffInMinutes($start, false)) - $totalRestMinutes;
+            if ($workMinutes < 0) $workMinutes=0; // マイナス防止
+                }
+                @endphp
+
+                <tr>
                 <td>{{ $day->format('m/d') }} ({{ $weekMap[$day->format('D')] }})</td>
                 <td>{{ $record?->start_time ? Carbon::parse($record->start_time)->format('H:i') : '' }}</td>
                 <td>{{ $record?->end_time ? Carbon::parse($record->end_time)->format('H:i') : '' }}</td>
-                <td>{{ minutesToTimeFormat($record?->break_duration) }}</td>
-                <td>{{ minutesToTimeFormat($record?->total_duration) }}</td>
+                <td>{{ minutesToTimeFormat($totalRestMinutes) }}</td>
+                <td>{{ minutesToTimeFormat($workMinutes ?? $record?->total_duration) }}</td>
                 <td>
-                    {{-- ✅ 出勤がある日は attendance.id で詳細へ --}}
-                    {{-- 出勤がない日は date をパラメータで渡す --}}
                     <a href="{{ $record 
-                            ? route('admin.attendance.show', $record->id) 
-                            : route('admin.attendance.show', ['id' => $key]) 
-                        }}" class="detail-link">
+                        ? route('admin.attendance.show', $record->id) 
+                        : route('admin.attendance.show', ['id' => $key]) }}"
+                        class="detail-link">
                         詳細
                     </a>
                 </td>
-            </tr>
-            @endforeach
+                </tr>
+                @endforeach
         </tbody>
     </table>
 

@@ -86,7 +86,7 @@ $targetDate = $attendance?->date ?? Carbon::parse(request()->route('id'));
         </div>
 </div>
 
-<button type="submit" class="submit-btn">申請</button>
+<button type="submit" class="submit-btn">修正</button>
 </form>
 
 {{-- ===============================
