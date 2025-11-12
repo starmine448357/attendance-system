@@ -46,6 +46,81 @@ MAIL_FROM_NAME="勤怠管理システム"
 
 ---
 
+## テーブル仕様
+
+### users テーブル
+| カラム名 | 型 | PRIMARY KEY | UNIQUE KEY | NOT NULL | FOREIGN KEY |
+|-----------|----|--------------|-------------|------------|--------------|
+| id | bigint | ○ |  | ○ |  |
+| name | varchar(255) |  |  | ○ |  |
+| email | varchar(255) |  | ○ | ○ |  |
+| email_verified_at | timestamp |  |  |  |  |
+| password | varchar(255) |  |  | ○ |  |
+| remember_token | varchar(100) |  |  |  |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+---
+
+### admins テーブル
+| カラム名 | 型 | PRIMARY KEY | UNIQUE KEY | NOT NULL | FOREIGN KEY |
+|-----------|----|--------------|-------------|------------|--------------|
+| id | bigint | ○ |  | ○ |  |
+| name | varchar(255) |  |  | ○ |  |
+| email | varchar(255) |  | ○ | ○ |  |
+| password | varchar(255) |  |  | ○ |  |
+| remember_token | varchar(100) |  |  |  |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+---
+
+### attendances テーブル
+| カラム名 | 型 | PRIMARY KEY | UNIQUE KEY | NOT NULL | FOREIGN KEY |
+|-----------|----|--------------|-------------|------------|--------------|
+| id | bigint | ○ |  | ○ |  |
+| user_id | bigint |  |  | ○ | users(id) |
+| date | date |  |  | ○ |  |
+| start_time | time |  |  |  |  |
+| break_start | time |  |  |  |  |
+| break_end | time |  |  |  |  |
+| end_time | time |  |  |  |  |
+| break_duration | integer |  |  | ○ |  |
+| total_duration | integer |  |  | ○ |  |
+| status | varchar(255) |  |  |  |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+---
+
+### rests テーブル
+| カラム名 | 型 | PRIMARY KEY | UNIQUE KEY | NOT NULL | FOREIGN KEY |
+|-----------|----|--------------|-------------|------------|--------------|
+| id | bigint | ○ |  | ○ |  |
+| attendance_id | bigint |  |  | ○ | attendances(id) |
+| order | integer |  |  |  |  |
+| break_start | time |  |  |  |  |
+| break_end | time |  |  |  |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+---
+
+### attendance_requests テーブル
+| カラム名 | 型 | PRIMARY KEY | UNIQUE KEY | NOT NULL | FOREIGN KEY |
+|-----------|----|--------------|-------------|------------|--------------|
+| id | bigint | ○ |  | ○ |  |
+| attendance_id | bigint |  |  | ○ | attendances(id) |
+| user_id | bigint |  |  | ○ | users(id) |
+| start_time | time |  |  |  |  |
+| end_time | time |  |  |  |  |
+| note | text |  |  | ○ |  |
+| status | enum('pending','approved','rejected') |  |  | ○ |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+---
+
 ## ログイン情報
 
 Seeder により初期データとして、管理者アカウント一件と一般ユーザーアカウント複数件が登録されています。  
