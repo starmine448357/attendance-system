@@ -17,6 +17,7 @@ class RegisterTest extends TestCase
             'name' => '',
             'email' => 'test@example.com',
             'password' => 'password123',
+            'password_confirmation' => 'password123',
         ]);
 
         $response->assertSessionHasErrors([
@@ -31,6 +32,7 @@ class RegisterTest extends TestCase
             'name' => 'テストユーザー',
             'email' => '',
             'password' => 'password123',
+            'password_confirmation' => 'password123',
         ]);
 
         $response->assertSessionHasErrors([
@@ -45,6 +47,7 @@ class RegisterTest extends TestCase
             'name' => 'テストユーザー',
             'email' => 'short@example.com',
             'password' => '1234567',
+            'password_confirmation' => '1234567',
         ]);
 
         $response->assertSessionHasErrors([
@@ -59,10 +62,26 @@ class RegisterTest extends TestCase
             'name' => 'テストユーザー',
             'email' => 'nopass@example.com',
             'password' => '',
+            'password_confirmation' => '',
         ]);
 
         $response->assertSessionHasErrors([
             'password' => 'パスワードを入力してください',
+        ]);
+    }
+
+    /** @test */
+    public function 確認用パスワードが一致しない場合_バリデーションメッセージが表示される()
+    {
+        $response = $this->post('/register', [
+            'name' => 'テストユーザー',
+            'email' => 'mismatch@example.com',
+            'password' => 'password123',
+            'password_confirmation' => 'different123',
+        ]);
+
+        $response->assertSessionHasErrors([
+            'password' => 'パスワードと一致しません',
         ]);
     }
 
@@ -73,6 +92,7 @@ class RegisterTest extends TestCase
             'name' => 'テストユーザー',
             'email' => 'valid@example.com',
             'password' => 'password123',
+            'password_confirmation' => 'password123',
         ]);
 
         $response->assertSessionHasNoErrors();
