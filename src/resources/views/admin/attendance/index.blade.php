@@ -72,7 +72,7 @@ return sprintf('%02d:%02d', $hours, $mins);
     <table class="attendance-table">
         <thead>
             <tr>
-                <th>名前</th>
+                <th>name</th>
                 <th>出勤</th>
                 <th>退勤</th>
                 <th>休憩</th>
